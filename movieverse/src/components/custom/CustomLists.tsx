@@ -2,6 +2,7 @@ import { Carousel } from "../Carousel"
 import { Card } from "../Card"
 import React, { ReactNode, SetStateAction, useState } from "react"
 import {  AiOutlineDown } from 'react-icons/ai';
+import { tempWatchedData } from "../../utils/data";
 
 export const CustomLists = () => {
   const [activeList, setActiveList] = useState('');
@@ -10,7 +11,9 @@ export const CustomLists = () => {
       <h2 className="md:ml-32 text-lg font-medium">Your Lists</h2>
       <ListsDropDown activeList={activeList} setActiveList={setActiveList} />
       <Carousel>
-        <Card />
+       {tempWatchedData.map((movie,index)=>(
+         <Card key={index} {...movie} />
+       ))}
       </Carousel>
     </div>
   )
