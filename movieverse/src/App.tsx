@@ -4,6 +4,15 @@ import { Search } from "./components/Search"
 import { DiscoverScreen } from "./components/screens/DiscoverScreen"
 import { ResultScreen } from "./components/screens/ResultScreen"
 
+
+export interface Movie{
+    Title: string,
+    Year: string,
+    Poster: string,
+    Type?:string,
+    runtime?: number,
+    imdbRating?: number,
+  }
 export const App = () => {
     return (
         <>
