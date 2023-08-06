@@ -1,22 +1,13 @@
 
-import { useEffect, useState } from "react"
-import { defaultSearchRequest, tempWatchedData } from "../../utils/data"
 import { Card } from "../Card"
 import { Carousel } from "../Carousel"
-import { CustomLists } from "../custom/CustomLists"
+// import { CustomLists } from "../custom/CustomLists"
 import { ResultsList } from "../movies/ResultsList"
 import { Recommended } from "../recommend/Recommended"
 import { Movie } from "../../App"
 
-export const DiscoverScreen = () => {
-    const [movies, setMovies] = useState<Movie[]>([]);
-    const handleDefaultMovies = async () => {
-        const data = await defaultSearchRequest()
-        setMovies(data?.Search);
-    }
-    useEffect(() => {
-        handleDefaultMovies();
-    }, [])
+export const DiscoverScreen = ({movies}:DiscoverProps) => {
+
 
     return (
         <div className="col-span-12 p-2 space-y-28">
@@ -34,5 +25,9 @@ export const DiscoverScreen = () => {
             {/* <CustomLists/> */}
         </div>
     )
+}
+
+interface DiscoverProps{
+    movies:Movie[]
 }
 

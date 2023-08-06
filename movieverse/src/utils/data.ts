@@ -1,3 +1,5 @@
+import { Movie } from "../App";
+
 const apiKey = import.meta.env.VITE_API_KEY;
 
 export const tempMovieData = [
@@ -47,20 +49,20 @@ export const tempWatchedData = [
   },
 ];
 
-export const searchRequest = async (query: string) => {
+export const searchRequest = async (query: string) : Promise<Movie[]> => {
   const data = await fetch(`http://www.omdbapi.com/?s=${query}&apikey=${apiKey}`)
   .then(res=>res.json())
-  .then(data=>console.log(data))
+  .then(data=>{return data})
   .catch(err=>console.log(err));
-  return data;
+  return data?.Search || [] as Movie[];
 }
 
-export const defaultSearchRequest = async () => {
+export const defaultSearchRequest = async () : Promise<Movie[]> => {
   const data = await fetch(`http://www.omdbapi.com/?s="oppenheimer"&apikey=${apiKey}`)
     .then(res => res.json())
     .then(data=>{return data})
     .catch(err => console.log(err));
-  return data
+  return data?.Search! || [] as Movie[];
 }
 declare global {
   interface ImportMeta {
