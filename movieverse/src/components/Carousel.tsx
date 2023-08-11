@@ -4,7 +4,7 @@ import { useSwipeable } from "react-swipeable";
 
 export const Carousel = ({children}:CarouselProps) => {
   const numCardsPerPage = 3; // Number of cards to display per page
-  const numPages = Math.ceil(children.length / numCardsPerPage); // Total number of pages
+  const numPages = Math.ceil(children?.length ?? 0 / numCardsPerPage); // Total number of pages
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -52,5 +52,5 @@ export const Carousel = ({children}:CarouselProps) => {
 }
 
 interface CarouselProps{
-    children:ReactNode[]
+    children:ReactNode[] | undefined
 }

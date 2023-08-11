@@ -3,14 +3,14 @@ import { Navbar } from "./components/Navbar"
 import { Search } from "./components/Search"
 import { DiscoverScreen } from "./components/screens/DiscoverScreen"
 import { useEffect, useState } from "react"
-import { defaultSearchRequest, getMovieData, searchRequest } from "./utils/data"
+import { getMovieData } from "./utils/data"
 import { ResultsList } from "./components/movies/ResultsList"
-import { Recommended } from "./components/recommend/Recommended"
 import { CustomLists } from "./components/custom/CustomLists"
 import { Carousel } from "./components/Carousel"
 import { Card } from "./components/Card"
 import { ListsDropDown } from "./components/custom/ListDropDown"
 import { DetailScreen } from "./components/screens/DetailScreen"
+import { useMovie } from "./hooks/useMovie"
 
 export type CustomList = {
     name: string,
@@ -59,7 +59,7 @@ export const mockMovieDetails = {
         imdbVotes: "",
 }
 export const App = () => {
-    const [movies, setMovies] = useState<Movie[]>([]);
+    const {movies,handleMovies} = useMovie();
     const [activeList, setActiveList] = useState<CustomList>({ name: "", items: [] });
     const [selectedMovie, setSelectedMovie] = useState<MovieDetails>(mockMovieDetails);
     const [rated, setRating] = useState(0);
@@ -72,41 +72,27 @@ export const App = () => {
     useEffect(() => {
       localStorage.setItem("lists", JSON.stringify(lists))
     }, [lists])
-  
 
-    const handleDefaultMovies = async () => {
-        const data = await defaultSearchRequest()
-        setMovies(data);
-    }
-    const handleSearchRequest = async (query: string) => {
-        const data = await searchRequest(query)
-        setMovies(data)
-    }
     const cardOnClick = async (movieTitle: string) => {
         const data = await getMovieData(movieTitle);
         setSelectedMovie(data)
     }
-    useEffect(() => {
-        handleDefaultMovies();
-    }, [])
+
     return (
         <>
             <Navbar>
-                <Search handleSearchRequest={handleSearchRequest} />
+                <Search handleSearchRequest={handleMovies} />
                 <Found />
             </Navbar>
             <section className="w-full">
                 <DiscoverScreen>
                     <ResultsList>
                         <Carousel>
-                            {movies.map((movie, index) => (
+                            {movies?.map((movie, index) => (
                                 <Card cardOnClick={cardOnClick} key={index} movie={movie} />
                             ))}
                         </Carousel>
                     </ResultsList>
-                    <Recommended>
-                        {/* <Carousel> */}
-                    </Recommended>
                     <CustomLists>
                         <ListsDropDown lists={lists} setLists={setLists} activeList={activeList} setActiveList={setActiveList} />
                         <Carousel>
