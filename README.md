@@ -10,25 +10,25 @@
 
 ## Routes
 
-Home => /
-Popular Movies => /popular
-Search => /search?q=query
-Special Feed For User => /feed
-Account => /account 
-Favorited Movies => /account/favorite
-Movie Details => /movie/:movieID
-Login => /login
-Register => /register
+* Home => /
+* Popular Movies => /popular
+* Search => /search?q=query
+* Special Feed For User => /feed
+* Account => /account 
+* Favorited Movies => /account/favorite
+* Movie Details => /movie/:movieID
+* Login => /login
+* Register => /register
 
 ## Technology Stack
 
-Framework => React
-Language => TypeScript
-Global State Management => Zustand
-Remote State Management => React Query
-Style => Tailwind CSS
-API => TMDB API, Supabase
-Database => Supabase
-Router => React Router
-Animation => Framer Motion
-Icons => React Icons
+* Framework => React
+* Language => TypeScript
+* Global State Management => Zustand
+* Remote State Management => React Query
+* Style => Tailwind CSS
+* API => TMDB API, Supabase
+* Database => Supabase
+* Router => React Router
+* Animation => Framer Motion
+* Icons => React Icons
