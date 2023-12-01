@@ -2,7 +2,11 @@
 export default {
   content: ['index.html','./src/**/*.{tsx,ts,jsx,js}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        'roboto':['Roboto']
+      }
+    },
     screens:{
       'sm':'0px',
       'md':'600px',

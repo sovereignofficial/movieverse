@@ -1,110 +1,61 @@
-import { Found } from "./components/Found"
-import { Navbar } from "./components/Navbar"
-import { Search } from "./components/Search"
-import { DiscoverScreen } from "./components/screens/DiscoverScreen"
-import { useEffect, useState } from "react"
-import { getMovieData } from "./utils/data"
-import { ResultsList } from "./components/movies/ResultsList"
-import { CustomLists } from "./components/custom/CustomLists"
-import { Carousel } from "./components/Carousel"
-import { Card } from "./components/Card"
-import { ListsDropDown } from "./components/custom/ListDropDown"
-import { DetailScreen } from "./components/screens/DetailScreen"
-import { useMovie } from "./hooks/useMovie"
+import { useRoutes } from "react-router-dom"
+import { AppLayout } from "./components/AppLayout"
+import { Home } from "./pages/Home"
+import { Popular } from "./pages/Popular"
+import { Feed } from "./pages/Feed"
+import { Search } from "./pages/Search"
+import { Account } from "./pages/Account"
+import { Auth } from "./pages/Auth"
+import { MovieDetails } from "./pages/MovieDetails"
+import { Favorites } from "./pages/Favorites"
 
-export type CustomList = {
-    name: string,
-    items: MovieUsersLike[] 
-}
 
-export interface Movie {
-    Title: string,
-    Year: string,
-    Poster: string
-}
-export interface MovieDetails {
-    Title: string,
-    Awards: string,
-    Country: string,
-    Director: string,
-    Genre: string,
-    Language: string,
-    Plot: string,
-    Poster: string,
-    Released: string,
-    Runtime: string,
-    Type: string,
-    imdbRating: string,
-    imdbVotes: string,
-}
-export interface MovieUsersLike{
-    Title:string,
-    Year:string,
-    Poster:string,
-    usersRate?:number,
-}
-export const mockMovieDetails = {
-        Title: "",
-        Awards: "",
-        Country: "",
-        Director: "",
-        Genre: "",
-        Language: "",
-        Plot: "",
-        Poster: "",
-        Released: "",
-        Runtime: "",
-        Type: "",
-        imdbRating: "",
-        imdbVotes: "",
-}
+
 export const App = () => {
-    const {movies,handleMovies} = useMovie();
-    const [activeList, setActiveList] = useState<CustomList>({ name: "", items: [] });
-    const [selectedMovie, setSelectedMovie] = useState<MovieDetails>(mockMovieDetails);
-    const [rated, setRating] = useState(0);
-    const [lists, setLists] = useState<CustomList[]>(JSON.parse(localStorage.getItem("lists")!) ?? []);
 
-    useEffect(() => {
-      lists[0] && setActiveList(lists[0]);
-    }, [])
-    
-    useEffect(() => {
-      localStorage.setItem("lists", JSON.stringify(lists))
-    }, [lists])
+    const routes = useRoutes([
+        {
+            element:<AppLayout/>,
+            children:[
+                {
+                    path:'/',
+                    element:<Home/>
+                },
+                {
+                    path:'/popular',
+                    element:<Popular/>
+                },
+                {
+                    path:'/feed',
+                    element:<Feed/>
+                },
+                {
+                    path:'/search',
+                    element:<Search/>
+                },
+                {
+                    path:'/account',
+                    element:<Account/>,
+                },
+                {
+                    path:'/account/favorites',
+                    element:<Favorites/>
+                },
+                {
+                    path:'/movie/:movieID',
+                    element:<MovieDetails/>
+                },
+                {
+                    path:'/login',
+                    element:<Auth/>
+                },
+                {
+                    path:'/register',
+                    element:<Auth/>
+                }
+            ]
+        }
+    ])
 
-    const cardOnClick = async (movieTitle: string) => {
-        const data = await getMovieData(movieTitle);
-        setSelectedMovie(data)
-    }
-
-    return (
-        <>
-            <Navbar>
-                <Search handleSearchRequest={handleMovies} />
-                <Found />
-            </Navbar>
-            <section className="w-full">
-                <DiscoverScreen>
-                    <ResultsList>
-                        <Carousel>
-                            {movies?.map((movie, index) => (
-                                <Card cardOnClick={cardOnClick} key={index} movie={movie} />
-                            ))}
-                        </Carousel>
-                    </ResultsList>
-                    <CustomLists>
-                        <ListsDropDown lists={lists} setLists={setLists} activeList={activeList} setActiveList={setActiveList} />
-                        <Carousel>
-                            {activeList.items.map((movie, index) => (
-                                <Card cardOnClick={cardOnClick} key={index} movie={movie} />
-                            ))}
-                        </Carousel>
-                    </CustomLists>
-                </DiscoverScreen>
-                <DetailScreen lists={lists} setLists={setLists} selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie}
-                 rated={rated} setRating={setRating} activeList={activeList} setActiveList = {setActiveList} />
-            </section>
-        </>
-    )
+    return routes
 }

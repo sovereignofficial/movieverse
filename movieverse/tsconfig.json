@@ -20,6 +20,6 @@
       "noUnusedParameters": true,
       "noFallthroughCasesInSwitch": true
     },
-    "include": ["src", "src/components/screens"],
+    "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]
   }
