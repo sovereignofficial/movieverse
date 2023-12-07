@@ -12,13 +12,13 @@
 
 Home => /
 Popular Movies => /popular
-Search => /search?q=query
+Search => /search?q=:searchQuery
 Special Feed For User => /feed
 Account => /account 
-Favorited Movies => /account/favorite
-Movie Details => /movie/:movieID
-Login => /login
-Register => /register
+Favorited Movies => /favorites
+Movie Details => /movie?m=:movieID
+Login => /auth/login
+Register => /auth/register
 
 ## Technology Stack
 

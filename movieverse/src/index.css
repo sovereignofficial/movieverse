@@ -4,16 +4,52 @@
 @tailwind utilities;
 @tailwind components;
 
+@layer base {
+    h1 {
+        @apply sm:text-xl md:text-2xl lg:text-4xl font-bold mx-2
+    }
 
+    h2 {
+        @apply sm:text-lg md:text-2xl lg:text-3xl font-medium
+    }
 
+    h3 {
+        @apply sm:text-base md:text-lg lg:text-xl font-medium
+    }
 
-/* For Webkit-based browsers (Chrome, Safari, and Opera) */
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
+    h4 {
+        @apply sm:text-sm md:text-base lg:text-lg font-medium
+    }
+
+    p {
+        @apply sm:text-xs lg:text-base
+    }
 }
 
-/* For IE, Edge, and Firefox */
-.scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+@layer components{
+    .btn-primary{
+        @apply bg-red-500 font-bold px-4 py-1 rounded-full
+    }
+    .btn-carousel{
+        @apply border border-zinc-500 w-32 py-1 rounded-full font-bold active:bg-red-500 active:border-none
+    }
+}
+
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 25px;
+}
+
+::-webkit-scrollbar:horizontal {
+    height: 5px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    background-color: #333;
+    border-radius: 25px;
 }

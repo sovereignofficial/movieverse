@@ -1,61 +1,78 @@
-import { useRoutes } from "react-router-dom"
-import { AppLayout } from "./components/AppLayout"
-import { Home } from "./pages/Home"
-import { Popular } from "./pages/Popular"
-import { Feed } from "./pages/Feed"
-import { Search } from "./pages/Search"
-import { Account } from "./pages/Account"
-import { Auth } from "./pages/Auth"
-import { MovieDetails } from "./pages/MovieDetails"
-import { Favorites } from "./pages/Favorites"
-
-
+import { useRoutes } from "react-router-dom";
+import { Home } from "./pages/Home";
+import { Popular } from "./pages/Popular";
+import { Feed } from "./pages/Feed";
+import { Search } from "./pages/Search";
+import { Account } from "./pages/Account";
+import { Auth } from "./pages/Auth";
+import { MovieDetails } from "./pages/MovieDetails";
+import { Favorites } from "./pages/Favorites";
+import { Register } from "./components/auth/Register";
+import { Login } from "./components/auth/Login";
+import { ProtectedRoutes } from "./pages/ProtectedRoutes";
+import { AppLayout } from "./components/layout/AppLayout";
+import { LandingLayout } from "./components/layout/LandingLayout";
 
 export const App = () => {
-
-    const routes = useRoutes([
+  const routes = useRoutes([
+    {
+      element: <ProtectedRoutes />,
+      children: [
         {
-            element:<AppLayout/>,
-            children:[
-                {
-                    path:'/',
-                    element:<Home/>
-                },
-                {
-                    path:'/popular',
-                    element:<Popular/>
-                },
-                {
-                    path:'/feed',
-                    element:<Feed/>
-                },
-                {
-                    path:'/search',
-                    element:<Search/>
-                },
-                {
-                    path:'/account',
-                    element:<Account/>,
-                },
-                {
-                    path:'/account/favorites',
-                    element:<Favorites/>
-                },
-                {
-                    path:'/movie/:movieID',
-                    element:<MovieDetails/>
-                },
-                {
-                    path:'/login',
-                    element:<Auth/>
-                },
-                {
-                    path:'/register',
-                    element:<Auth/>
-                }
-            ]
-        }
-    ])
+          element: <AppLayout />,
+          children: [
+            {
+              path: "/popular",
+              element: <Popular />,
+            },
+            {
+              path: "/feed",
+              element: <Feed />,
+            },
+            {
+              path: "/search?q=:searchQuery",
+              element: <Search />,
+            },
+            {
+              path: "/account",
+              element: <Account />,
+            },
+            {
+              path: "/favorites",
+              element: <Favorites />,
+            },
+            {
+              path: "/movie?m=:movieID",
+              element: <MovieDetails />,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      element: <LandingLayout />,
+      children: [
+        {
+          path:'/',
+          element:<Home/>
+        },
+        {
+          path: "/auth",
+          element: <Auth />,
+          children: [
+            {
+              path: "login",
+              element: <Login />,
+            },
+            {
+              path: "register",
+              element: <Register />,
+            },
+          ],
+        },
+      ],
+    },
+  ]);
 
-    return routes
-}
+  return routes;
+};

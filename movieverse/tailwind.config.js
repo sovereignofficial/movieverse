@@ -9,9 +9,10 @@ export default {
     },
     screens:{
       'sm':'0px',
-      'md':'600px',
-      'lg':'1280px',
-    }
+      'md':'768px',
+      'lg':'1024px',
+      'xl':'1650px',
+    },
   },
   plugins: [],
 }
