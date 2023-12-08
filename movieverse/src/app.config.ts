@@ -1,7 +1,7 @@
 const appRoutes = [
     {
-        name: 'Popular',
-        url: '/popular',
+        name: 'Movies',
+        url: '/movies',
     },
     {
         name: 'For You',

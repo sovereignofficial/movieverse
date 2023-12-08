@@ -11,12 +11,12 @@
 ## Routes
 
 Home => /
-Popular Movies => /popular
+Movies => /movies?f=:genreId
+Movie Details => /movie?m=:movieID
 Search => /search?q=:searchQuery
 Special Feed For User => /feed
 Account => /account 
 Favorited Movies => /favorites
-Movie Details => /movie?m=:movieID
 Login => /auth/login
 Register => /auth/register
 

@@ -1,6 +1,6 @@
 import { MoviesMedia } from "~/components/MoviesMedia";
 
-export const Popular = () => {
+export const Movies = () => {
 
   return (
     <div className="p-4">

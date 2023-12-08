@@ -9,7 +9,7 @@ export const LandingLayout = () => {
   
   useEffect(()=>{
     if(isAuthenticated){
-      navigate('/popular');
+      navigate('/movies');
     }
   },[isAuthenticated,navigate])
 

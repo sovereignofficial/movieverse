@@ -1,6 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import { Home } from "./pages/Home";
-import { Popular } from "./pages/Popular";
+import { Movies } from "./pages/Movies";
 import { Feed } from "./pages/Feed";
 import { Search } from "./pages/Search";
 import { Account } from "./pages/Account";
@@ -22,8 +22,8 @@ export const App = () => {
           element: <AppLayout />,
           children: [
             {
-              path: "/popular",
-              element: <Popular />,
+              path: "/movies",
+              element: <Movies />,
             },
             {
               path: "/feed",

@@ -1,7 +1,9 @@
 import { Movie } from "~/types/movies";
 
-const popularMovieUrl = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
-const trendingMovieUrl = `https://api.themoviedb.org/3/trending/movie/day?language=en-US&api_key=${import.meta.env.VITE_TMDB_API_KEY}`;
+const apiKey =import.meta.env.VITE_TMDB_API_KEY;
+const popularMovieUrl = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=${apiKey}`;
+const trendingMovieUrl = `https://api.themoviedb.org/3/trending/movie/day?language=en-US&api_key=${apiKey}`;
+const genreBasedMovieSearchUrl =(genreId:number) => `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}`;
 const options = {
     method:'GET',
     headers:{
@@ -20,6 +22,14 @@ export const getPopularMovies = async () => {
 
 export const getTrendMovies = async () => {
     const data = await fetch(trendingMovieUrl,options)
+    .then(res=>res.json())
+    .catch(err=>console.error(`tmdb error:${err}`));
+
+    return data.results as Movie[];
+}
+
+export const getGenreMovies = async (genreId:number) => {
+    const data = await fetch(genreBasedMovieSearchUrl(genreId),options)
     .then(res=>res.json())
     .catch(err=>console.error(`tmdb error:${err}`));
 
