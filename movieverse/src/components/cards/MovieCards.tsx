@@ -12,6 +12,7 @@ export const MovieCards: React.FC<{ movies: Movie[] }> = ({ movies }) => {
           <Card.CardFooter />
         </Card>
       ))}
+
     </>
   );
 };

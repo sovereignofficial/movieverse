@@ -4,7 +4,7 @@ import { getGenreMovies, getPopularMovies, getTrendMovies } from "~/services/api
 import { useMovieStore } from "~/zustand/movieStore";
 
 export const useMovies = () =>{
-    const {currentFilter,setMovies,movies} = useMovieStore();
+    const {currentFilter,setMovies,movies,page} = useMovieStore();
 
     const {mutate:popularMoviesFn} = useMutation({
         mutationKey:['popular'],
@@ -30,7 +30,7 @@ export const useMovies = () =>{
 
     const {mutate:genreBasedMoviesFn} = useMutation({
         mutationKey:['trends'],
-        mutationFn:getGenreMovies,
+        mutationFn:(genreParams:{genreId:number,page:number})=>getGenreMovies(genreParams.genreId,genreParams.page),
         onSuccess:(res)=>{
             setMovies(res);
         },
@@ -42,21 +42,21 @@ export const useMovies = () =>{
     useEffect(()=>{
         switch(true){
             case currentFilter === "popular":
-                popularMoviesFn()
+                popularMoviesFn(page)
                 break;
                 case currentFilter === "trending":
-                    trendingMoviesFn()
+                    trendingMoviesFn(page)
                     break;
                     case typeof currentFilter === 'number':
-                        genreBasedMoviesFn(currentFilter)
+                        genreBasedMoviesFn({genreId:currentFilter,page})
                         break;
 
                         default:
-                            popularMoviesFn();
+                            popularMoviesFn(page);
                     
         }
 
-    },[currentFilter,genreBasedMoviesFn,popularMoviesFn,trendingMoviesFn]);
+    },[currentFilter,genreBasedMoviesFn,popularMoviesFn,trendingMoviesFn,page]);
 
     return {movies,currentFilter}
 }
