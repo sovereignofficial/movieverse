@@ -3,14 +3,14 @@ import { create } from "zustand"
 const MAX_PAGE = 3;
 const MIN_PAGE = 0;
 
-type CarouselStore = {
+type TCarouselStore = {
     location:number,
     pageCount:number,
     slideRight:()=>void,
     slideLeft:()=>void,
 }
 
-export const useCarouselStore = create<CarouselStore>((set)=>({
+export const useCarouselStore = create<TCarouselStore>((set)=>({
     location:0,
     pageCount:0,
     slideLeft:()=>set((state)=>({location: state.pageCount>MIN_PAGE ? state.location + 30 : state.location,

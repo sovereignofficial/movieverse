@@ -3,60 +3,60 @@ import { useEffect } from "react";
 import { getGenreMovies, getPopularMovies, getTrendMovies } from "~/services/apiMovies"
 import { useMovieStore } from "~/zustand/movieStore";
 
-export const useMovies = () =>{
-    const {currentFilter,setMovies,movies,page} = useMovieStore();
+export const useMovies = () => {
+    const { currentFilter, setMovies, movies, page } = useMovieStore();
 
-    const {mutate:popularMoviesFn} = useMutation({
-        mutationKey:['popular'],
-        mutationFn:getPopularMovies,
-        onSuccess:(res)=>{
+    const { mutate: popularMoviesFn } = useMutation({
+        mutationKey: ['popular'],
+        mutationFn: getPopularMovies,
+        onSuccess: (res) => {
             setMovies(res);
         },
-        onError:(e)=>{
+        onError: (e) => {
             console.error(e.message)
         }
     });
 
-    const {mutate:trendingMoviesFn} = useMutation({
-        mutationKey:['trends'],
-        mutationFn:getTrendMovies,
-        onSuccess:(res)=>{
+    const { mutate: trendingMoviesFn } = useMutation({
+        mutationKey: ['trends'],
+        mutationFn: getTrendMovies,
+        onSuccess: (res) => {
             setMovies(res);
         },
-        onError:(e)=>{
+        onError: (e) => {
             console.error(e.message)
         }
     });
 
-    const {mutate:genreBasedMoviesFn} = useMutation({
-        mutationKey:['trends'],
-        mutationFn:(genreParams:{genreId:number,page:number})=>getGenreMovies(genreParams.genreId,genreParams.page),
-        onSuccess:(res)=>{
+    const { mutate: genreBasedMoviesFn } = useMutation({
+        mutationKey: ['trends'],
+        mutationFn: (genreParams: { genreId: number, page: number }) => getGenreMovies(genreParams.genreId, genreParams.page),
+        onSuccess: (res) => {
             setMovies(res);
         },
-        onError:(e)=>{
+        onError: (e) => {
             console.error(e.message)
         }
     });
 
-    useEffect(()=>{
-        switch(true){
+    useEffect(() => {
+        switch (true) {
             case currentFilter === "popular":
                 popularMoviesFn(page)
                 break;
-                case currentFilter === "trending":
-                    trendingMoviesFn(page)
-                    break;
-                    case typeof currentFilter === 'number':
-                        genreBasedMoviesFn({genreId:currentFilter,page})
-                        break;
+            case currentFilter === "trending":
+                trendingMoviesFn(page)
+                break;
+            case typeof currentFilter === 'number':
+                genreBasedMoviesFn({ genreId: currentFilter, page })
+                break;
 
-                        default:
-                            popularMoviesFn(page);
-                    
+            default:
+                popularMoviesFn(page);
+
         }
 
-    },[currentFilter,genreBasedMoviesFn,popularMoviesFn,trendingMoviesFn,page]);
+    }, [currentFilter, genreBasedMoviesFn, popularMoviesFn, trendingMoviesFn, page]);
 
-    return {movies,currentFilter}
+    return { movies, currentFilter }
 }

@@ -3,8 +3,10 @@ import { useMovies } from "~/hooks/useMovies";
 import { MovieFilters } from "./MovieFilters";
 import { genres } from "~/app.config";
 import { useMovieStore } from "~/zustand/movieStore";
+import { User } from "~/types/users";
 
-export const MoviesMedia: React.FC = () => {
+export const MoviesMedia: React.FC<{user:User}> = ({user}) => {
+  
   const { movies, currentFilter } = useMovies();
   const {incrementPage} = useMovieStore();
 
@@ -17,7 +19,7 @@ export const MoviesMedia: React.FC = () => {
 
       {movies.length > 0 ? (
         <div className="w-10/12 grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-1 gap-4 justify-center items-center  mx-auto p-3">
-          <MovieCards movies={movies} />
+          <MovieCards user={user} movies={movies} />
         </div>
       ) : (
         <div className="w-full ">

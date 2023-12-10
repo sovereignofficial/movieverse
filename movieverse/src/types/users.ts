@@ -1,10 +1,11 @@
-import { Movie } from "./movies"
 
 export type User = {
+    id?:number,
     fullName:string,
     email:string,
     age:number,
-    favoriteMovies: Movie[]
+    favoriteMovies: number[],
+    favoriteGenres: number[]
 }
 
-export type RegisterUser = Omit<User,"favoriteMovies"> & {password:string}
+export type RegisterUser = Omit<User,"favoriteMovies" | "favoriteGenres"> & {password:string}

@@ -17,7 +17,8 @@ export const registerUserSupabase = async <T extends RegisterUser>({ email, full
         fullName: fullName,
         email: email,
         age: age,
-        favoriteMovies: []
+        favoriteMovies: [],
+        favoriteGenres: []
     });
     if (appError || !appUser) throw new Error(appError?.message || "data sent differently")
     return appUser as User

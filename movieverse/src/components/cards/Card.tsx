@@ -2,11 +2,13 @@ import { ReactNode } from "react"
 import { CardBody } from "./CardBody"
 import { CardFooter } from "./CardFooter"
 import { CardHeader } from "./CardHeader"
+import { Movie, MoviesFromMovieverse } from "~/types/movies"
+import { User } from "~/types/users"
 
 type CardType = React.FC<{children:ReactNode}> & {
     CardHeader:React.FC<{imgAddress:string}>,
     CardBody:React.FC<{title:string,overview:string}>,
-    CardFooter:React.FC
+    CardFooter:React.FC<{movie:Movie | MoviesFromMovieverse,user:User}>
 }
 
 const Card:CardType = ({children}) => {

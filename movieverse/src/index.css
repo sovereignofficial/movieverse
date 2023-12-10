@@ -33,6 +33,7 @@
     .btn-carousel{
         @apply border border-zinc-500 w-32 py-1 rounded-full font-bold z-30
     }
+
 }
 
 
