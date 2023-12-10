@@ -33,7 +33,15 @@
     .btn-carousel{
         @apply border border-zinc-500 w-32 py-1 rounded-full font-bold z-30
     }
-
+    .page{
+        @apply p-3 w-11/12 mx-auto
+    }
+    .page-header{
+        @apply p-3
+    }
+    .page-body{
+        @apply w-10/12 grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-1 xl:grid-cols-5 gap-4 justify-center items-center  mx-auto p-3
+    }
 }
 
 

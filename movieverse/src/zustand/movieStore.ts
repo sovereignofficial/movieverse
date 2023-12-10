@@ -22,7 +22,7 @@ export const useMovieStore = create<TMovieStore>((set)=>({
     movies:[],
     favoriteMovies:[],
     currentFilter:"popular",
-    setFavoriteMovies:(newFavoriteMovies)=>set(state=>({favoriteMovies:[...state.favoriteMovies,...newFavoriteMovies]})),
+    setFavoriteMovies:(newFavoriteMovies)=>set(()=>({favoriteMovies:newFavoriteMovies})),
     setUnfavoriteMovie:(movie)=>set((state)=>({favoriteMovies:state.favoriteMovies.filter(favMovie=> favMovie.id !== movie.id)})),
     setMovies:(newMovies)=>set((state)=>({movies:[...state.movies,...newMovies]})),
     resetMovies:()=>set(()=>({movies:[]})),

@@ -1,16 +1,20 @@
 import { MovieCards } from "~/components/cards/MovieCards"
 import { useFavoriteMovies } from "~/hooks/useFavoriteMovies"
+import { useUsers } from "~/hooks/useUsers";
 
 export const Favorites = () => {
-  const {user,favoriteMovies} = useFavoriteMovies();
-  
-  return (
-    <div>
-      <div>
+  const {favoriteMovies, favoriteMovieFn, unfavMovieFn, isLoading} = useFavoriteMovies();
+  const {user} = useUsers();
 
+
+  return (
+    <div className="page">
+      <div className="page-header">
+          <h1>Favorites</h1>
       </div>
-      <div>
-        <MovieCards user={user} movies={favoriteMovies}/>
+      <div className="page-body">
+        <MovieCards user={user} movies={favoriteMovies} movie={favoriteMovies[0]} favoriteMovies={favoriteMovies}
+        favoriteMovieFn={favoriteMovieFn} unfavMovieFn={unfavMovieFn} isLoading={isLoading} />
       </div>
     </div>
   )

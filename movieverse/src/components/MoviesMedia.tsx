@@ -4,10 +4,12 @@ import { MovieFilters } from "./MovieFilters";
 import { genres } from "~/app.config";
 import { useMovieStore } from "~/zustand/movieStore";
 import { User } from "~/types/users";
+import { useFavoriteMovies } from "~/hooks/useFavoriteMovies";
 
 export const MoviesMedia: React.FC<{user:User}> = ({user}) => {
   
   const { movies, currentFilter } = useMovies();
+  const {favoriteMovies, favoriteMovieFn, unfavMovieFn,isLoading} = useFavoriteMovies();
   const {incrementPage} = useMovieStore();
 
   return (
@@ -18,8 +20,13 @@ export const MoviesMedia: React.FC<{user:User}> = ({user}) => {
       </div>
 
       {movies.length > 0 ? (
-        <div className="w-10/12 grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-1 gap-4 justify-center items-center  mx-auto p-3">
-          <MovieCards user={user} movies={movies} />
+        <div className="page-body">
+          <MovieCards user={user} movies={movies} 
+          movie={movies[0]}
+          favoriteMovieFn={favoriteMovieFn} 
+          favoriteMovies={favoriteMovies} 
+          unfavMovieFn={unfavMovieFn} 
+          isLoading={isLoading} />
         </div>
       ) : (
         <div className="w-full ">

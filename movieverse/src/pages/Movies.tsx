@@ -4,7 +4,7 @@ import { useUsers } from "~/hooks/useUsers";
 export const Movies = () => {
   const {user} = useUsers();
   return (
-    <div className="p-4">
+    <div className="page">
       <MoviesMedia user={user}/>
     </div>
   );

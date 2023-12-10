@@ -1,14 +1,15 @@
 import { useNavigate } from "react-router-dom"
 import { FavoriteButton } from "~/components/buttons/FavoriteButton"
-import { Movie, MoviesFromMovieverse } from "~/types/movies"
-import { User } from "~/types/users";
+import { MovieComponent } from "~/types/movies"
 
-export const CardFooter:React.FC<{movie:Movie | MoviesFromMovieverse,user:User}> = ({movie,user}) => {
+export const CardFooter:MovieComponent = ({movie,movies,user,favoriteMovies,unfavMovieFn,favoriteMovieFn,isLoading}) => {
   const navigate = useNavigate();
 
   return (
     <div className="grid grid-flow-col p-2 place-items-center">
-        <FavoriteButton movie={movie} user={user}/>
+        <FavoriteButton movies={movies} movie={movie} user={user} 
+        favoriteMovies={favoriteMovies} favoriteMovieFn={favoriteMovieFn} 
+        unfavMovieFn={unfavMovieFn} isLoading={isLoading}/>
         <button onClick={()=>navigate(`/movie/${movie.id}`)} className="btn-primary">Details</button>
     </div>
   )
