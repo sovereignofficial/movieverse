@@ -2,13 +2,13 @@ import { Movie, MoviesFromMovieverse } from "~/types/movies";
 import { User } from "~/types/users";
 import { supabaseClient } from "./supabase";
 
-const apiKey = import.meta.env.VITE_TMDB_API_KEY;
+export const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 const popularMovieUrl = (page: number) => `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}&api_key=${apiKey}`;
 const trendingMovieUrl = (page: number) => `https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}&api_key=${apiKey}`;
 const genreBasedMovieSearchUrl = (genreId: number, page: number) => `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${page}`;
 export const getMovieImageUrl = (path: string) => `https://image.tmdb.org/t/p/original${path}`;
 
-const options = {
+export const options = {
     method: 'GET',
     headers: {
         accept: 'application/json',
@@ -162,3 +162,23 @@ export const getMoviesFromDb = async ():Promise<MoviesFromMovieverse[]> => {
  
     return favoriteMovies as MoviesFromMovieverse[];
 } 
+
+export const getMovieTrailer = async (movieId:string) => {
+    
+    const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`,options)
+    .then(res=>res.json())
+    .catch(err=>console.error(err));
+    const videoKey= data.results[0].key
+    const videoUrl = `https://www.youtube.com/watch?v=${videoKey}`
+    return {videoKey,videoUrl}
+}
+
+export const getMovie = async (movieId:string) => {
+    const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`,options)
+    .then(res=>res.json())
+    .catch(err=>console.error(err));
+
+    console.log(data);
+
+    return data;
+}

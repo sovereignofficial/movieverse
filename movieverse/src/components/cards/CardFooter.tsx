@@ -10,7 +10,7 @@ export const CardFooter:MovieComponent = ({movie,movies,user,favoriteMovies,unfa
         <FavoriteButton movies={movies} movie={movie} user={user} 
         favoriteMovies={favoriteMovies} favoriteMovieFn={favoriteMovieFn} 
         unfavMovieFn={unfavMovieFn} isLoading={isLoading}/>
-        <button onClick={()=>navigate(`/movie/${movie.id}`)} className="btn-primary">Details</button>
+        <button onClick={()=>navigate(`/movie?m=${movie.id}`)} className="btn-primary">Details</button>
     </div>
   )
 }

@@ -12,7 +12,7 @@ type CardType = React.FC<{children:ReactNode}> & {
 
 const Card:CardType = ({children}) => {
   return (
-    <div className="p-2 hover:bg-zinc-900 rounded-xl">
+    <div className="p-2 hover:bg-zinc-950 rounded-xl">
         {children}
     </div>
   )

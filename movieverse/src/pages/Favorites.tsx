@@ -12,7 +12,7 @@ export const Favorites = () => {
       <div className="page-header">
           <h1>Favorites</h1>
       </div>
-      <div className="page-body">
+      <div className="page-body-cards">
         <MovieCards user={user} movies={favoriteMovies} movie={favoriteMovies[0]} favoriteMovies={favoriteMovies}
         favoriteMovieFn={favoriteMovieFn} unfavMovieFn={unfavMovieFn} isLoading={isLoading} />
       </div>

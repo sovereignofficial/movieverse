@@ -20,7 +20,7 @@ export const MoviesMedia: React.FC<{user:User}> = ({user}) => {
       </div>
 
       {movies.length > 0 ? (
-        <div className="page-body">
+        <div className="page-body-cards">
           <MovieCards user={user} movies={movies} 
           movie={movies[0]}
           favoriteMovieFn={favoriteMovieFn} 

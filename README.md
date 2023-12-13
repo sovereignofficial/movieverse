@@ -32,3 +32,4 @@ Register => /auth/register
 * Router => React Router
 * Animation => Framer Motion
 * Icons => React Icons
+* Video Player => React Player

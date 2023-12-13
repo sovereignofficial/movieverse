@@ -30,7 +30,7 @@ export const App = () => {
               element: <Feed />,
             },
             {
-              path: "/search?q=:searchQuery",
+              path: "/search",
               element: <Search />,
             },
             {
@@ -42,7 +42,7 @@ export const App = () => {
               element: <Favorites />,
             },
             {
-              path: "/movie?m=:movieID",
+              path: "/movie",
               element: <MovieDetails />,
             },
           ],

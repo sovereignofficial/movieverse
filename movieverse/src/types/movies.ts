@@ -45,3 +45,11 @@ export type MovieComponent = React.FC<{
     favoriteMovieFn: ({ movie, user }: { movie: Movie; user: User }) => void,
     isLoading: boolean
 }>;
+
+
+export type TMovieDetail = Movie & {
+    revenue:number,
+    budget:number,
+    runtime:number,
+    release_date:string,
+}

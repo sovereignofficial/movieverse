@@ -16,6 +16,9 @@ export default {
       animation: {
         'fill-heart': 'fill-heart 0.3s ease-in-out',
       },
+      colors:{
+        'primary':"#fa3b2d",
+      }
     },
     screens:{
       'sm':'0px',
