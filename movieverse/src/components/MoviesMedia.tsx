@@ -8,8 +8,8 @@ import { useFavoriteMovies } from "~/hooks/useFavoriteMovies";
 
 export const MoviesMedia: React.FC<{user:User}> = ({user}) => {
   
-  const { movies, currentFilter } = useMovies();
-  const {favoriteMovies, favoriteMovieFn, unfavMovieFn,isLoading} = useFavoriteMovies();
+  const { moviesFromTmdb, currentFilter } = useMovies();
+  const {moviesFromDb, handleFav,isLoading} = useFavoriteMovies();
   const {incrementPage} = useMovieStore();
 
   return (
@@ -19,18 +19,17 @@ export const MoviesMedia: React.FC<{user:User}> = ({user}) => {
         <h1>{genres.find((genre) => genre.id === currentFilter)?.name}</h1>
       </div>
 
-      {movies.length > 0 ? (
+      {moviesFromTmdb.length > 0 ? (
         <div className="page-body-cards">
-          <MovieCards user={user} movies={movies} 
-          movie={movies[0]}
-          favoriteMovieFn={favoriteMovieFn} 
-          favoriteMovies={favoriteMovies} 
-          unfavMovieFn={unfavMovieFn} 
+          <MovieCards user={user} moviesFromTmdb={moviesFromTmdb} 
+          handleFav={handleFav}
+          movie={moviesFromTmdb[0]}
+          moviesFromDb={moviesFromDb} 
           isLoading={isLoading} />
         </div>
       ) : (
         <div className="w-full ">
-          <h4 className="text-justify">
+          <p className="text-justify">
             We couldn't find the movie you're looking for. It's possible that
             there might be a typo in the movie title or the movie might not be
             available in our database. Please try again with a different title
@@ -38,7 +37,7 @@ export const MoviesMedia: React.FC<{user:User}> = ({user}) => {
             movie, you can try searching by genre, director, or actor. We're
             always adding new movies, so it's possible the movie you're looking
             for will be available soon
-          </h4>
+          </p>
         </div>
       )}
       <div className="grid place-items-center">

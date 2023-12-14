@@ -5,10 +5,11 @@ import { User } from "~/types/users"
 import { useUsers } from "./useUsers"
 import { useEffect } from "react"
 import { useMovieStore } from "~/zustand/movieStore"
+import { isFavorited } from "~/utils/helpers"
 
 export const useFavoriteMovies = () => {
     const { user } = useUsers();
-    const { setFavoriteMovies, favoriteMovies } = useMovieStore();
+    const { setFavoriteMovies, moviesFromDb } = useMovieStore();
     const queryClient = useQueryClient();
     const { mutate: favoriteMovieFn,isPending:favoriteLoading } = useMutation({
         mutationKey: ['favorite-movie'],
@@ -32,22 +33,31 @@ export const useFavoriteMovies = () => {
         }
     });
 
-    const { data: moviesFromDb, isError: isGetFavMoviesError, error: getFavoriteMoviesError } = useQuery({
+    const { data: dbMoviesData, isError: isGetFavMoviesError, error: getFavoriteMoviesError } = useQuery({
         queryKey: ['favorite-movies'],
         queryFn: () => getMoviesFromDb(),
 
     });
 
     useEffect(() => {
-        if (moviesFromDb && !isGetFavMoviesError && !getFavoriteMoviesError) {
-            const favoritedByUser:MoviesFromMovieverse[] = moviesFromDb.filter(movie => movie.favorited_from.includes(user.id!))
+        if (dbMoviesData && !isGetFavMoviesError && !getFavoriteMoviesError) {
+            const favoritedByUser:MoviesFromMovieverse[] = dbMoviesData.filter(movie => movie.favorited_from.includes(user.id!))
             
-            if(favoritedByUser.length !== favoriteMovies.length){
+            if(favoritedByUser.length !== moviesFromDb.length){
                 setFavoriteMovies(favoritedByUser);
             }
         }
-    }, [moviesFromDb, setFavoriteMovies, isGetFavMoviesError, getFavoriteMoviesError, user.id, favoriteMovies])
+    }, [dbMoviesData, setFavoriteMovies, isGetFavMoviesError, getFavoriteMoviesError, user.id, moviesFromDb])
 
     const isLoading = favoriteLoading || unfavLoading
-    return { favoriteMovieFn, unfavMovieFn, favoriteMovies, isGetFavMoviesError, getFavoriteMoviesError, isLoading, user }
+
+
+    const handleFav = (movie:Movie | undefined, movieFromDb:MoviesFromMovieverse | undefined) => {
+            const favorited = isFavorited(movie!.title, user, dbMoviesData!);
+            favorited 
+            ? unfavMovieFn({ movie: movieFromDb!, user })
+            : favoriteMovieFn({movie:movie!,user,});
+      };
+
+    return {handleFav, moviesFromDb, isGetFavMoviesError, getFavoriteMoviesError, isLoading, user }
 }

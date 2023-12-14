@@ -164,7 +164,6 @@ export const getMoviesFromDb = async ():Promise<MoviesFromMovieverse[]> => {
 } 
 
 export const getMovieTrailer = async (movieId:string) => {
-    
     const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`,options)
     .then(res=>res.json())
     .catch(err=>console.error(err));
@@ -181,4 +180,15 @@ export const getMovie = async (movieId:string) => {
     console.log(data);
 
     return data;
+}
+
+export const getMovieFromDb = async (movieId:string) =>{
+    
+    const {data,error} = await supabaseClient.from('movies')
+    .select("*")
+    .eq("movieId",movieId);
+
+    if(error) throw new Error(error.message);
+
+    return data[0] as MoviesFromMovieverse
 }

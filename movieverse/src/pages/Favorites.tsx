@@ -3,7 +3,7 @@ import { useFavoriteMovies } from "~/hooks/useFavoriteMovies"
 import { useUsers } from "~/hooks/useUsers";
 
 export const Favorites = () => {
-  const {favoriteMovies, favoriteMovieFn, unfavMovieFn, isLoading} = useFavoriteMovies();
+  const {moviesFromDb, handleFav, isLoading} = useFavoriteMovies();
   const {user} = useUsers();
 
 
@@ -13,8 +13,13 @@ export const Favorites = () => {
           <h1>Favorites</h1>
       </div>
       <div className="page-body-cards">
-        <MovieCards user={user} movies={favoriteMovies} movie={favoriteMovies[0]} favoriteMovies={favoriteMovies}
-        favoriteMovieFn={favoriteMovieFn} unfavMovieFn={unfavMovieFn} isLoading={isLoading} />
+        <MovieCards user={user} moviesFromTmdb={[...moviesFromDb.map(movie=>{
+          return {
+            ...movie,
+            id:movie.movieId
+          }
+        })]} movie={moviesFromDb[0]} 
+        isLoading={isLoading} handleFav={handleFav} moviesFromDb={moviesFromDb}  />
       </div>
     </div>
   )

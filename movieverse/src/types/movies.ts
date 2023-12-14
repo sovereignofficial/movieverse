@@ -32,24 +32,18 @@ export type MoviesFromMovieverse = {
 
 export type MovieComponent = React.FC<{
     movie: Movie,
-    movies: Movie[],
-    favoriteMovies: MoviesFromMovieverse[],
+    moviesFromTmdb: Movie[],
+    moviesFromDb: MoviesFromMovieverse[],
     user: User,
-    unfavMovieFn: ({
-        movie,
-        user,
-    }: {
-        movie: MoviesFromMovieverse;
-        user: User;
-    }) => void,
-    favoriteMovieFn: ({ movie, user }: { movie: Movie; user: User }) => void,
-    isLoading: boolean
+    isLoading: boolean,
+    handleFav: (movie: Movie | undefined, movieFromDb: MoviesFromMovieverse | undefined) => void
 }>;
 
 
 export type TMovieDetail = Movie & {
-    revenue:number,
-    budget:number,
-    runtime:number,
-    release_date:string,
+    revenue: number,
+    budget: number,
+    runtime: number,
+    release_date: string,
+    genres: { id: number, name: string }[]
 }

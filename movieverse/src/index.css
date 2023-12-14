@@ -40,10 +40,10 @@
         @apply p-3 
     }
     .page-body{
-        @apply w-10/12 mx-auto
+        @apply md:w-10/12 mx-auto
     }
     .page-body-cards{
-        @apply w-10/12 grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-1 xl:grid-cols-5 gap-4 justify-center items-center  mx-auto p-3
+        @apply md:w-10/12 grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-1 xl:grid-cols-5 gap-4 justify-center items-center  mx-auto p-3
     }
 }
 

@@ -5,8 +5,8 @@ const MIN_PAGE=1;
 
 type TMovieStore = {
     page:number,
-    movies:Movie[],
-    favoriteMovies:MoviesFromMovieverse[],
+    moviesFromTmdb:Movie[],
+    moviesFromDb:MoviesFromMovieverse[],
     currentFilter:string | number,
     setMovies:(movies:Movie[])=>void,
     resetMovies:()=>void,
@@ -19,14 +19,14 @@ type TMovieStore = {
 
 export const useMovieStore = create<TMovieStore>((set)=>({
     page:MIN_PAGE,
-    movies:[],
-    favoriteMovies:[],
+    moviesFromTmdb:[],
+    moviesFromDb:[],
     currentFilter:"popular",
-    setFavoriteMovies:(newFavoriteMovies)=>set(()=>({favoriteMovies:newFavoriteMovies})),
-    setUnfavoriteMovie:(movie)=>set((state)=>({favoriteMovies:state.favoriteMovies.filter(favMovie=> favMovie.id !== movie.id)})),
-    setMovies:(newMovies)=>set((state)=>({movies:[...state.movies,...newMovies]})),
-    resetMovies:()=>set(()=>({movies:[]})),
+    setFavoriteMovies:(newFavoriteMovies)=>set(()=>({moviesFromDb:newFavoriteMovies})),
+    setUnfavoriteMovie:(movie)=>set((state)=>({moviesFromDb:state.moviesFromDb.filter(favMovie=> favMovie.id !== movie.id)})),
+    setMovies:(newMovies)=>set((state)=>({moviesFromTmdb:[...state.moviesFromTmdb,...newMovies]})),
+    resetMovies:()=>set(()=>({moviesFromTmdb:[]})),
     setFilter:(filter)=>set(()=>({currentFilter:filter})),
     incrementPage:() => set((state)=>({page:state.page + 1})),
-    resetPages:()=>set(()=>({page:MIN_PAGE}))
+    resetPages:()=>set(()=>({page:MIN_PAGE})),
 }))

@@ -11,7 +11,7 @@ export const MovieDetails = () => {
   useEffect(() => {
     setMovieId(searchParams.get("m"));
   }, [searchParams]);
-  const { trailer, movieDetails } = useMovie(movieId!);
+  const { trailer, movieDetails, movieFromDb } = useMovie(movieId!);
 
   return (
     <div className="page space-y-4">
@@ -20,7 +20,7 @@ export const MovieDetails = () => {
       </div>
       <div className="page-body space-y-4">
         {trailer && <TrailerPlayer trailerUrl={trailer.videoUrl} />}
-        <MovieDetail movieDetails={movieDetails} />
+        <MovieDetail movieFromDb={movieFromDb} movieDetails={movieDetails} />
       </div>
     </div>
   );

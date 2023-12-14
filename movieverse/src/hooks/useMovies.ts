@@ -4,7 +4,7 @@ import { getGenreMovies, getPopularMovies, getTrendMovies } from "~/services/api
 import { useMovieStore } from "~/zustand/movieStore";
 
 export const useMovies = () => {
-    const { currentFilter, setMovies, movies, page } = useMovieStore();
+    const { currentFilter, setMovies, moviesFromTmdb, page } = useMovieStore();
 
     const { mutate: popularMoviesFn } = useMutation({
         mutationKey: ['popular'],
@@ -58,5 +58,5 @@ export const useMovies = () => {
 
     }, [currentFilter, genreBasedMoviesFn, popularMoviesFn, trendingMoviesFn, page]);
 
-    return { movies, currentFilter }
+    return { moviesFromTmdb, currentFilter }
 }
