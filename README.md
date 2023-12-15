@@ -33,3 +33,4 @@ Register => /auth/register
 * Animation => Framer Motion
 * Icons => React Icons
 * Video Player => React Player
+* Carousels => Swiperjs

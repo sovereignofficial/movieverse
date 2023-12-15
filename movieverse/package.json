@@ -21,6 +21,7 @@
     "react-icons": "latest",
     "react-player": "^2.13.0",
     "react-router-dom": "latest",
+    "swiper": "^11.0.5",
     "tailwindcss": "latest",
     "zustand": "latest"
   },

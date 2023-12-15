@@ -1,11 +1,14 @@
 import { Movie, MoviesFromMovieverse } from "~/types/movies";
 import { User } from "~/types/users";
 import { supabaseClient } from "./supabase";
+import { getUserGenreMap, userSpecialMovieDistribution } from "~/utils/helpers";
+import { genres } from "~/app.config";
 
 export const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 const popularMovieUrl = (page: number) => `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}&api_key=${apiKey}`;
 const trendingMovieUrl = (page: number) => `https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}&api_key=${apiKey}`;
 const genreBasedMovieSearchUrl = (genreId: number, page: number) => `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${page}`;
+
 export const getMovieImageUrl = (path: string) => `https://image.tmdb.org/t/p/original${path}`;
 
 export const options = {
@@ -75,7 +78,7 @@ export const favoriteMovie = async (movie: Movie, user: User) => {
         const { data: updatedMovie, error: updatedMovieError } = await supabaseClient
             .from('movies')
             .update({
-                favorited_from: [...existingMovie[0].favorited_from,user.id]
+                favorited_from: [...existingMovie[0].favorited_from, user.id]
             })
             .eq('movieId', movieId)
             .select('*')
@@ -129,66 +132,105 @@ export const favoriteMovie = async (movie: Movie, user: User) => {
     }
 }
 
-export const unfavMovie = async (movie:MoviesFromMovieverse,user:User) => {
-    const {data,error} = await supabaseClient
-    .from('movies')
-    .update({
-        favorited_from:movie.favorited_from.filter(uid => uid !== user?.id)
-    })
-    .eq('id',movie.id)
-    .select('*');
+export const unfavMovie = async (movie: MoviesFromMovieverse, user: User) => {
+    const { data, error } = await supabaseClient
+        .from('movies')
+        .update({
+            favorited_from: movie.favorited_from.filter(uid => uid !== user?.id)
+        })
+        .eq('id', movie.id)
+        .select('*');
 
-    if(error) throw new Error(error.message);
+    if (error) throw new Error(error.message);
 
-    const {error:unfavFromUserError} = await supabaseClient
-    .from("users")
-    .update({
-        favoriteMovies:user.favoriteMovies.filter(mid=> mid !== movie.id)
-    })
-    .eq('id',user.id);
+    const { error: unfavFromUserError } = await supabaseClient
+        .from("users")
+        .update({
+            favoriteMovies: user.favoriteMovies.filter(mid => mid !== movie.id)
+        })
+        .eq('id', user.id);
 
-    if(unfavFromUserError) throw new Error(unfavFromUserError.message);
+    if (unfavFromUserError) throw new Error(unfavFromUserError.message);
     return data[0] as MoviesFromMovieverse
 }
 
-export const getMoviesFromDb = async ():Promise<MoviesFromMovieverse[]> => {
-    const {data:favoriteMovies, error} = await supabaseClient
-    .from('movies')
-    .select("*")
- 
+export const getMoviesFromDb = async (): Promise<MoviesFromMovieverse[]> => {
+    const { data: favoriteMovies, error } = await supabaseClient
+        .from('movies')
+        .select("*")
+
     if (error || favoriteMovies === null) {
         throw new Error(`Error fetching favorite movies:${error || "an error occured"}`);
     }
- 
-    return favoriteMovies as MoviesFromMovieverse[];
-} 
 
-export const getMovieTrailer = async (movieId:string) => {
-    const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`,options)
-    .then(res=>res.json())
-    .catch(err=>console.error(err));
-    const videoKey= data.results[0].key
-    const videoUrl = `https://www.youtube.com/watch?v=${videoKey}`
-    return {videoKey,videoUrl}
+    return favoriteMovies as MoviesFromMovieverse[];
 }
 
-export const getMovie = async (movieId:string) => {
-    const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`,options)
-    .then(res=>res.json())
-    .catch(err=>console.error(err));
+export const getMovieTrailer = async (movieId: string) => {
+    const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`, options)
+        .then(res => res.json())
+        .catch(err => console.error(err));
+    const videoKey = data.results[0].key
+    const videoUrl = `https://www.youtube.com/watch?v=${videoKey}`
+    return { videoKey, videoUrl }
+}
+
+export const getMovie = async (movieId: string) => {
+    const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`, options)
+        .then(res => res.json())
+        .catch(err => console.error(err));
 
     console.log(data);
 
     return data;
 }
 
-export const getMovieFromDb = async (movieId:string) =>{
-    
-    const {data,error} = await supabaseClient.from('movies')
-    .select("*")
-    .eq("movieId",movieId);
+export const getMovieFromDb = async (movieId: string) => {
 
-    if(error) throw new Error(error.message);
+    const { data, error } = await supabaseClient.from('movies')
+        .select("*")
+        .eq("movieId", movieId);
+
+    if (error) throw new Error(error.message);
 
     return data[0] as MoviesFromMovieverse
+}
+
+export const getSpecialMoviesForUser = async (user: User) => {
+    const genremap = getUserGenreMap(user);
+    const movies = userSpecialMovieDistribution(genremap);
+    const specialForUser = []
+
+
+    for (let i = 0; specialForUser.length < 10; i++) {
+        const { results }: { results: Movie[] } = await fetch(genreBasedMovieSearchUrl(movies[i].genre, 1)).then(res => res.json())
+        for (let z = 0; z < movies[i].amount; z++) {
+            specialForUser.push(results[z]);
+        }
+    }
+    return specialForUser;
+}
+
+export const getMoviesFromTop3Genres = async (user: User) => {
+    const topGenresOfUser = getUserGenreMap(user);
+    const results = [];
+
+    for (let i = 0; i < 3; i++) {
+        const { results: topMovies }:{ results: Movie[] } = await fetch(genreBasedMovieSearchUrl(topGenresOfUser[i].genre, 1)).then(res => res.json());
+        results.push({
+            genreName: genres.find(genre => genre.id === topGenresOfUser[i].genre)?.name,
+            movies: topMovies
+        })
+    }
+
+    return results
+}
+
+export const getMostlyLikedMoviesFromMovieverse = async () => {
+    const movies = await getMoviesFromDb();
+
+    const filteredMovies = movies.filter(movie=> movie.favorited_from.length > 0);
+    const sortedMovies = filteredMovies.sort((a,b)=> b.favorited_from.length - a.favorited_from.length);
+
+    return sortedMovies
 }
