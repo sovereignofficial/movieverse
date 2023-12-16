@@ -199,13 +199,18 @@ export const getMovieFromDb = async (movieId: string) => {
 export const getSpecialMoviesForUser = async (user: User) => {
     const genremap = getUserGenreMap(user);
     const movies = userSpecialMovieDistribution(genremap);
-    const specialForUser = []
+    const specialForUser: Movie[] = []
 
 
     for (let i = 0; specialForUser.length < 10; i++) {
         const { results }: { results: Movie[] } = await fetch(genreBasedMovieSearchUrl(movies[i].genre, 1)).then(res => res.json())
         for (let z = 0; z < movies[i].amount; z++) {
-            specialForUser.push(results[z]);
+            const randomAmount = Math.floor(Math.random() * 10);
+            if (specialForUser.some(item => item.title === results[z + randomAmount].title)) {
+                specialForUser.push(results[z + randomAmount + 1]);
+            } else {
+                specialForUser.push(results[z + randomAmount])
+            }
         }
     }
     return specialForUser;
@@ -216,7 +221,7 @@ export const getMoviesFromTop3Genres = async (user: User) => {
     const results = [];
 
     for (let i = 0; i < 3; i++) {
-        const { results: topMovies }:{ results: Movie[] } = await fetch(genreBasedMovieSearchUrl(topGenresOfUser[i].genre, 1)).then(res => res.json());
+        const { results: topMovies }: { results: Movie[] } = await fetch(genreBasedMovieSearchUrl(topGenresOfUser[i].genre, 1)).then(res => res.json());
         results.push({
             genreName: genres.find(genre => genre.id === topGenresOfUser[i].genre)?.name,
             movies: topMovies
@@ -229,8 +234,11 @@ export const getMoviesFromTop3Genres = async (user: User) => {
 export const getMostlyLikedMoviesFromMovieverse = async () => {
     const movies = await getMoviesFromDb();
 
-    const filteredMovies = movies.filter(movie=> movie.favorited_from.length > 0);
-    const sortedMovies = filteredMovies.sort((a,b)=> b.favorited_from.length - a.favorited_from.length);
+    const filteredMovies = movies.filter(movie => movie.favorited_from.length > 0);
+    const sortedMovies = filteredMovies.sort((a, b) => b.favorited_from.length - a.favorited_from.length);
+
+    //switch the database id's with tmdb ids
+    sortedMovies.forEach(movie => movie.id = movie.movieId);
 
     return sortedMovies
 }

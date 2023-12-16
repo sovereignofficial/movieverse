@@ -9,8 +9,8 @@ export const FeedSection:React.FC<{header:string,movies:Movie[] | MoviesFromMovi
             <h2>{header}</h2>
         </div>
         <SwiperContainer>
-            {movies.map(movie=>(
-                <ImageLink imgUrl={movie.poster_path} title={movie.title} overwiew={movie.overview} movieId={movie.id}/>
+            {movies.map((movie,key)=>(
+                <ImageLink key={key} imgUrl={movie?.poster_path} title={movie?.title} overwiew={movie?.overview} movieId={movie?.id}/>
             ))}
         </SwiperContainer>
     </section>

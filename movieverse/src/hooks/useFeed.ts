@@ -1,25 +1,31 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { getMostlyLikedMoviesFromMovieverse, getMoviesFromTop3Genres, getSpecialMoviesForUser } from "~/services/apiMovies"
 import { useUsers } from "./useUsers"
+import { useEffect } from "react";
 
 export const useFeed = () => {
     const {user} = useUsers();
 
-    const {data:specialMoviesForUser} = useQuery({
-        queryFn:() => getSpecialMoviesForUser(user),
-        queryKey:['special']
+    const {mutate:getSpecialMovies, data:specialMoviesForUser} = useMutation ({
+        mutationFn:getSpecialMoviesForUser,
+        mutationKey:['special']
     });
 
-    const {data:top3genres} = useQuery({
-        queryFn:() => getMoviesFromTop3Genres(user),
-        queryKey:['top-genres']
+    const {mutate:getTop3Genres, data:top3genres} = useMutation({
+        mutationFn:getMoviesFromTop3Genres,
+        mutationKey:['top-genres']
     });
 
     const {data:mostlyLiked} = useQuery({
-        queryFn:() => getMostlyLikedMoviesFromMovieverse(),
+        queryFn:getMostlyLikedMoviesFromMovieverse,
         queryKey:['mostly-liked']
     });
 
-    
+    useEffect(()=>{
+        getSpecialMovies(user);
+        getTop3Genres(user);
+    },[user]);
+
+
     return {specialMoviesForUser,top3genres,mostlyLiked}
 }

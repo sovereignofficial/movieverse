@@ -10,11 +10,9 @@ export const SwiperContainer:React.FC<{children:ReactNode[]}> = ({children}) => 
      modules={[Navigation, Pagination, Scrollbar, A11y]}
      spaceBetween={50}
      slidesPerView={3}
-     navigation
+     navigation={true}
      pagination={{ clickable: true }}
      scrollbar={{ draggable: true }}
-     onSwiper={(swiper) => console.log(swiper)}
-     onSlideChange={() => console.log('slide change')}
      >
       {
         children.map(child=>(

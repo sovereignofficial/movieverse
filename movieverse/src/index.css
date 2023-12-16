@@ -30,6 +30,9 @@
     .btn-primary{
         @apply bg-primary font-bold px-4 py-1 rounded-full
     }
+    .btn-secondary{
+        @apply px-4 py-1 animation-slow text-zinc-500 border-zinc-500 hover:border-red-500 border rounded hover:text-red-500
+    }
     .btn-carousel{
         @apply border border-zinc-500 w-32 py-1 rounded-full font-bold z-30
     }
@@ -37,7 +40,7 @@
         @apply p-3 w-11/12 mx-auto
     }
     .page-header{
-        @apply p-3 
+        @apply p-3 flex justify-center items-center
     }
     .page-body{
         @apply md:w-10/12 mx-auto
