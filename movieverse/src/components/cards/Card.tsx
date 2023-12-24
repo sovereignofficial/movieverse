@@ -5,14 +5,14 @@ import { CardHeader } from "./CardHeader"
 import {  MovieComponent } from "~/types/movies"
 
 type CardType = React.FC<{children:ReactNode}> & {
-    CardHeader:React.FC<{imgAddress:string}>,
+    CardHeader:React.FC<{imgAddress:string,title:string}>,
     CardBody:React.FC<{title:string,overview:string}>,
     CardFooter:MovieComponent
 }
 
 const Card:CardType = ({children}) => {
   return (
-    <div className="p-2 hover:bg-zinc-950 rounded-xl">
+    <div className="p-2 hover:bg-zinc-900 rounded-xl">
         {children}
     </div>
   )

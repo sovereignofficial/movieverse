@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getMovieImageUrl } from '~/services/apiMovies'
+import { getMovieImageUrl } from '~/utils/helpers'
 
 export const ImageLink:React.FC<{imgUrl:string,title:string,overwiew:string,movieId:number}> = ({
     imgUrl,title,movieId

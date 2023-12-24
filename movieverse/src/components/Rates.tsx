@@ -16,19 +16,21 @@ export const Rates: React.FC<{
   return (
     <div className="flex justify-between items-center ">
       <div className="flex gap-2 items-center">
-        <FavoriteButton
-          isFavorited={isFavorited(movieDetails?.title, user, moviesFromDb)}
-          onClick={() =>
-            handleFav(
-              {
-                ...movieDetails,
-                genre_ids: [...movieDetails.genres.map((genre) => genre.id)],
-              },
-              movieFromDb
-            )
-          }
-          disabled={isLoading}
-        />
+        {movieFromDb && (
+          <FavoriteButton
+            isFavorited={isFavorited(movieDetails?.title, user, moviesFromDb)}
+            onClick={() =>
+              handleFav(
+                {
+                  ...movieDetails,
+                  genre_ids: [...movieDetails.genres.map((genre) => genre.id)],
+                },
+                movieFromDb
+              )
+            }
+            disabled={isLoading}
+          />
+        )}
         <p>{favorites} users favorited.</p>
       </div>
       <div className="flex justify-end gap-2 items-center">

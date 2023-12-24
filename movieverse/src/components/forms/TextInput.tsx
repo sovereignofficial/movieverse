@@ -3,14 +3,14 @@ import { ReactNode } from "react";
 
 export const TextInput:React.FC<{
     name:string
-    placeHolder:string,
+    placeholder:string,
     maxLength:number,
     submitBtn?:ReactNode
 }> = ({
     name,
     maxLength,
     submitBtn,
-    placeHolder
+    placeholder
 }) => {
   return (
     <div className="bg-zinc-700 rounded-full flex items-center py-1 px-2">
@@ -18,7 +18,7 @@ export const TextInput:React.FC<{
         className="text-center font-medium p-1 bg-transparent w-full h-full outline-none "
         type={"text"}
         name={name}
-        placeHolder={placeHolder}
+        placeholder={placeholder}
         maxLength= {maxLength}
       />
       {submitBtn}

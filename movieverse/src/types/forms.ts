@@ -1,13 +1,13 @@
 import { ReactNode } from "react";
 
 type InitialVal = {
-    [key: string]: unknown
+    [key: string]: string | number
 }
 
 export type TForm = React.FC<{ children: ReactNode, initialValues: InitialVal, validate?: (values: InitialVal) => void, onSubmit: (values: InitialVal) => void }> & {
     textInput: React.FC<{
         name:string,
-        placeHolder: string,
+        placeholder: string,
         maxLength: number,
         submitBtn?: ReactNode
     }>,

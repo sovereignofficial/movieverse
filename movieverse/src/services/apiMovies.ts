@@ -1,28 +1,13 @@
 import { Movie, MoviesFromMovieverse } from "~/types/movies";
 import { User } from "~/types/users";
 import { supabaseClient } from "./supabase";
-import { getUserGenreMap, userSpecialMovieDistribution } from "~/utils/helpers";
+import { apiKey, genreBasedMovieSearchUrl, getUserGenreMap, options, popularMovieUrl, trendingMovieUrl, userSpecialMovieDistribution } from "~/utils/helpers";
 import { genres } from "~/app.config";
-
-export const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-const popularMovieUrl = (page: number) => `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}&api_key=${apiKey}`;
-const trendingMovieUrl = (page: number) => `https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}&api_key=${apiKey}`;
-const genreBasedMovieSearchUrl = (genreId: number, page: number) => `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${page}`;
-
-export const getMovieImageUrl = (path: string) => `https://image.tmdb.org/t/p/original${path}`;
-
-export const options = {
-    method: 'GET',
-    headers: {
-        accept: 'application/json',
-
-    }
-}
 
 export const getPopularMovies = async (page: number) => {
     console.log(`Fetching the page:${page}`);
 
-    const data = await fetch(popularMovieUrl(page), options)
+    const data = await fetch(popularMovieUrl(page,apiKey), options)
         .then(res => res.json())
         .catch(err => console.error(`tmdb error:${err}`));
 
@@ -30,7 +15,7 @@ export const getPopularMovies = async (page: number) => {
 }
 
 export const getTrendMovies = async (page: number) => {
-    const data = await fetch(trendingMovieUrl(page), options)
+    const data = await fetch(trendingMovieUrl(page,apiKey), options)
         .then(res => res.json())
         .catch(err => console.error(`tmdb error:${err}`));
 
@@ -38,21 +23,11 @@ export const getTrendMovies = async (page: number) => {
 }
 
 export const getGenreMovies = async (genreId: number, page: number) => {
-    const data = await fetch(genreBasedMovieSearchUrl(genreId, page), options)
+    const data = await fetch(genreBasedMovieSearchUrl(genreId, page,apiKey), options)
         .then(res => res.json())
         .catch(err => console.error(`tmdb error:${err}`));
 
     return data.results as Movie[];
-}
-
-
-
-export const getPopularTvShows = async () => {
-
-}
-
-export const getPopularPeople = async () => {
-
 }
 
 export const favoriteMovie = async (movie: Movie, user: User) => {
@@ -166,6 +141,36 @@ export const getMoviesFromDb = async (): Promise<MoviesFromMovieverse[]> => {
     return favoriteMovies as MoviesFromMovieverse[];
 }
 
+export const saveMovieIntoDb = async (movie:Movie) => {
+    const {id: movieId,
+        adult,
+        genre_ids,
+        original_language,
+        overview,
+        popularity,
+        poster_path,
+        title,
+        vote_average,
+        vote_count} = movie;
+    
+    const {error} = await supabaseClient
+    .from('movies')
+    .insert({
+        movieId,
+        adult,
+        genre_ids,
+        original_language,
+        overview,
+        popularity,
+        poster_path,
+        title,
+        vote_average,
+        vote_count,
+    })
+    if(error) throw new Error(error.message);
+    
+}
+
 export const getMovieTrailer = async (movieId: string) => {
     const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`, options)
         .then(res => res.json())
@@ -203,7 +208,7 @@ export const getSpecialMoviesForUser = async (user: User) => {
 
 
     for (let i = 0; specialForUser.length < 10; i++) {
-        const { results }: { results: Movie[] } = await fetch(genreBasedMovieSearchUrl(movies[i].genre, 1)).then(res => res.json())
+        const { results }: { results: Movie[] } = await fetch(genreBasedMovieSearchUrl(movies[i].genre, 1,apiKey)).then(res => res.json())
         for (let z = 0; z < movies[i].amount; z++) {
             const randomAmount = Math.floor(Math.random() * 10);
             if (specialForUser.some(item => item.title === results[z + randomAmount].title)) {
@@ -221,7 +226,7 @@ export const getMoviesFromTop3Genres = async (user: User) => {
     const results = [];
 
     for (let i = 0; i < 3; i++) {
-        const { results: topMovies }: { results: Movie[] } = await fetch(genreBasedMovieSearchUrl(topGenresOfUser[i].genre, 1)).then(res => res.json());
+        const { results: topMovies }: { results: Movie[] } = await fetch(genreBasedMovieSearchUrl(topGenresOfUser[i].genre, 1,apiKey)).then(res => res.json());
         results.push({
             genreName: genres.find(genre => genre.id === topGenresOfUser[i].genre)?.name,
             movies: topMovies
