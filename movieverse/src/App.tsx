@@ -45,6 +45,14 @@ export const App = () => {
               path: "/movie",
               element: <MovieDetails />,
             },
+            {
+              path: "/tv",
+              element: <MovieDetails />,
+            },
+            {
+              path: "/person",
+              element: <MovieDetails />,
+            },
           ],
         },
       ],

@@ -16,6 +16,8 @@
 Home => /
 Movies => /movies?f=:genreId
 Movie Details => /movie?m=:movieID
+Tv Show Details => /tv?t=:tvId
+Person Details => /person?p=:personId
 Search => /search?q=:searchQuery
 Special Feed For User => /feed
 Account => /account
