@@ -1,25 +1,27 @@
-import { useNavigate } from "react-router-dom";
 import { FavoriteButton } from "~/components/buttons/FavoriteButton";
-import { MovieComponent } from "~/types/movies";
-import { isFavorited } from "~/utils/helpers";
-export const CardFooter: MovieComponent = ({
-  movie,
-  handleFav,
-  isLoading,
-  user,
-  moviesFromDb,
-}) => {
-  const navigate = useNavigate();
 
+interface CardFooterProps {
+  isLoading: boolean;
+  isFavorited: boolean;
+  onClickFavorite: () => void;
+  onClickDetails: () => void;
+}
+
+export const CardFooter: React.FC<CardFooterProps> = ({
+  isLoading,
+  isFavorited,
+  onClickFavorite,
+  onClickDetails,
+}) => {
   return (
     <div className="grid grid-flow-col p-2 place-items-center">
       <FavoriteButton
         disabled={isLoading}
-        isFavorited={isFavorited(movie.title, user, moviesFromDb)}
-        onClick={()=>handleFav(movie,moviesFromDb.find(item=>item.movieId === movie.id))}
+        isFavorited={isFavorited}
+        onClick={onClickFavorite}
       />
       <button
-        onClick={() => navigate(`/movie?m=${movie.id}`)}
+        onClick={onClickDetails}
         className="btn-primary"
       >
         Details

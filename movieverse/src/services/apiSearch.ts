@@ -1,6 +1,6 @@
 import { Movie } from '~/types/movies';
 import { TPerson } from '~/types/people';
-import { TvShow } from '~/types/tv';
+import { TvShow } from '~/types/tvshow';
 import { options,apiKey, getMovieSearchUrl,getTvShowSearchUrl,getPeopleSearchUrl} from '~/utils/helpers';
 
 export const searchForMovies = async (query:string) =>{

@@ -1,6 +1,6 @@
 import { MoviesFromMovieverse, Movie } from "~/types/movies"
 import { SwiperContainer } from "./carousel/SwiperContainer"
-import { ImageLink } from "./ImageLink"
+import { ImageLink } from "./images/ImageLink"
 
 export const FeedSection:React.FC<{header:string,movies:Movie[] | MoviesFromMovieverse[]}> = ({header,movies}) => {
   return (

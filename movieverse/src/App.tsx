@@ -12,6 +12,8 @@ import { Login } from "./components/auth/Login";
 import { ProtectedRoutes } from "./pages/ProtectedRoutes";
 import { AppLayout } from "./components/layout/AppLayout";
 import { LandingLayout } from "./components/layout/LandingLayout";
+import { PersonDetails } from "./pages/PersonDetails";
+import { TvShowDetails } from "./pages/TvShowDetails";
 
 export const App = () => {
   const routes = useRoutes([
@@ -47,11 +49,11 @@ export const App = () => {
             },
             {
               path: "/tv",
-              element: <MovieDetails />,
+              element: <PersonDetails />,
             },
             {
               path: "/person",
-              element: <MovieDetails />,
+              element: <TvShowDetails />,
             },
           ],
         },

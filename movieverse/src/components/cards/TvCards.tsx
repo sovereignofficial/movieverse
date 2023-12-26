@@ -1,5 +1,5 @@
 import React from 'react'
-import { TvShow } from '~/types/tv'
+import { TvShow } from '~/types/tvshow'
 import { Card } from './Card'
 import {  getTvShowImageUrl } from '~/utils/helpers'
 

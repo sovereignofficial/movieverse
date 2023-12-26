@@ -55,6 +55,7 @@ export const getTvShowImageUrl = (path: string) => `https://image.tmdb.org/t/p/o
 export const getMovieSearchUrl = (query: string, apiKey: string) => `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`
 export const getPeopleSearchUrl = (query: string, apiKey: string) => `https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${query}`
 export const getTvShowSearchUrl = (query: string, apiKey: string) => `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${query}`
+export const getTvShowApiUrl = (id:string,apiKey:string) => `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}`;
 
 export const apiKey = import.meta.env.VITE_TMDB_API_KEY;
 export const options = {
