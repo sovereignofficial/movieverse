@@ -1,11 +1,6 @@
 import { FavoriteButton } from "~/components/buttons/FavoriteButton";
+import { CardFooterProps } from "~/types/cards";
 
-interface CardFooterProps {
-  isLoading: boolean;
-  isFavorited: boolean;
-  onClickFavorite: () => void;
-  onClickDetails: () => void;
-}
 
 export const CardFooter: React.FC<CardFooterProps> = ({
   isLoading,
