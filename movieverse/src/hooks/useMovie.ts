@@ -12,15 +12,15 @@ export const useMovie = () => {
 
     });
 
-    const { data: movieDetails } = useQuery({
+    const { data: movie } = useQuery({
         queryFn: () => getMovie(movieId),
         queryKey: ['movie-details', movieId]
     })
 
     const { data: movieFromDb } = useQuery({
         queryKey: ['movie', movieId],
-        queryFn: () => getMovieFromDb(movieId)
+        queryFn: () => getMovieFromDb(Number(movieId))
     })
 
-    return { trailer, movieDetails, movieFromDb }
+    return { trailer, movie, movieFromDb }
 }

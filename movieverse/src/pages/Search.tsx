@@ -2,14 +2,18 @@ import { SearchResultSection } from "~/components/SearchResultSection";
 import { MovieCards } from "~/components/cards/MovieCards";
 import { PeopleCards } from "~/components/cards/PeopleCards";
 import { TvCards } from "~/components/cards/TvCards";
-import { useFavoriteMovies } from "~/hooks/useFavoriteMovies";
+import { useFavorite } from "~/hooks/useFavorite";
 import { useSearch } from "~/hooks/useSearch";
-import { useUsers } from "~/hooks/useUsers";
 
 export const Search = () => {
-  const {moviesFromDb, handleFav, isLoading} = useFavoriteMovies();
-  const {user} = useUsers();
+  const {
+    handleFavMovie,handleFavPerson,handleFavTvShow
+  } = useFavorite();
+
+
+
   const { movieResults, tvResults, peopleResults, query } = useSearch();
+
 
 
   return (
@@ -20,24 +24,17 @@ export const Search = () => {
       <div className="page-body">
         {movieResults && movieResults?.length > 0 && (
           <SearchResultSection header="Movies">
-            <MovieCards
-            moviesFromDb={moviesFromDb}
-            moviesFromTmdb={movieResults}
-            movie={movieResults[0]}
-            user={user}
-            handleFav={handleFav}
-            isLoading={isLoading}
-            />
-             </SearchResultSection>
+            <MovieCards moviesFromTmdb={movieResults} handleFav={handleFavMovie} />
+          </SearchResultSection>
         )}
         {tvResults && tvResults.length > 0 && (
           <SearchResultSection header="Tv Shows">
-            <TvCards tv_shows={tvResults} />
+            <TvCards handleFav={handleFavTvShow} tv_shows={tvResults} />
           </SearchResultSection>
         )}
         {peopleResults && peopleResults.length > 0 && (
           <SearchResultSection header="People">
-            <PeopleCards people={peopleResults} />
+            <PeopleCards handleFav={handleFavPerson} people={peopleResults} />
           </SearchResultSection>
         )}
       </div>

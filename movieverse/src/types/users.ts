@@ -1,11 +1,24 @@
+import { User } from "@supabase/supabase-js";
+import { TMovie } from "./movies";
+import { TPerson } from "./people";
+import { TvShow } from "./tvshow";
 
-export type User = {
-    id?:number,
-    fullName:string,
+export type UserFavorites = {
+    user: User;
+    favoriteMovies: TMovie[];
+    favoritePeople: TPerson[];
+    favoriteTVShows: TvShow[];
+  };
+
+export interface ISignIn{
     email:string,
-    age:number,
-    favoriteMovies: number[],
-    favoriteGenres: number[]
+    password:string
 }
 
-export type RegisterUser = Omit<User,"favoriteMovies" | "favoriteGenres"> & {password:string}
+export interface ISignUp{
+    email:string,
+    password:string,
+    age:number,
+    gender:number,
+    fullName:string
+}

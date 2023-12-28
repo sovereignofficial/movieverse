@@ -1,8 +1,8 @@
-import { MoviesFromMovieverse, Movie } from "~/types/movies"
+import { TMovie } from "~/types/movies"
 import { SwiperContainer } from "./carousel/SwiperContainer"
 import { ImageLink } from "./images/ImageLink"
 
-export const FeedSection:React.FC<{header:string,movies:Movie[] | MoviesFromMovieverse[]}> = ({header,movies}) => {
+export const FeedSection:React.FC<{header:string,movies:TMovie[]}> = ({header,movies}) => {
   return (
     <section className="space-y-5">
         <div>

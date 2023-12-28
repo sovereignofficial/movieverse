@@ -1,4 +1,4 @@
-import { Movie } from '~/types/movies';
+import { TMovie } from '~/types/movies';
 import { TPerson } from '~/types/people';
 import { TvShow } from '~/types/tvshow';
 import { options,apiKey, getMovieSearchUrl,getTvShowSearchUrl,getPeopleSearchUrl} from '~/utils/helpers';
@@ -8,7 +8,7 @@ export const searchForMovies = async (query:string) =>{
     .then(res=>res.json())
     .catch(err=>console.error(err))
 
-    return results as Movie[]
+    return results as TMovie[]
 }
 
 export const searchForPeople = async (query:string) =>{

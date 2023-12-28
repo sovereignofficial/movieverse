@@ -7,7 +7,7 @@ export const usePerson = () => {
    const personId = searchParams.get('p') ?? "";
 
    const {data:person} = useQuery({
-    queryKey:['get-person'],
+    queryKey:['get-person',personId],
     queryFn:()=>getPerson(personId)
    });
 

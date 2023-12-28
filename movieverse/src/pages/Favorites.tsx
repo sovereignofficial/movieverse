@@ -1,11 +1,10 @@
 import { MovieCards } from "~/components/cards/MovieCards"
-import { useFavoriteMovies } from "~/hooks/useFavoriteMovies"
-import { useUsers } from "~/hooks/useUsers";
+import { useFavorite } from "~/hooks/useFavorite"
+import { useUsersStore } from "~/zustand/usersStore";
 
 export const Favorites = () => {
-  const {moviesFromDb, handleFav, isLoading} = useFavoriteMovies();
-  const {user} = useUsers();
-
+  const {handleFavMovie} = useFavorite();
+  const {favoriteMovies} = useUsersStore();
 
   return (
     <div className="page">
@@ -13,13 +12,7 @@ export const Favorites = () => {
           <h1>Favorites</h1>
       </div>
       <div className="page-body-cards">
-        <MovieCards user={user} moviesFromTmdb={[...moviesFromDb.map(movie=>{
-          return {
-            ...movie,
-            id:movie.movieId
-          }
-        })]} movie={moviesFromDb[0]} 
-        isLoading={isLoading} handleFav={handleFav} moviesFromDb={moviesFromDb}  />
+         {favoriteMovies && <MovieCards moviesFromTmdb={favoriteMovies}  handleFav={handleFavMovie}/>}
       </div>
     </div>
   )

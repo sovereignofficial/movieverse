@@ -1,175 +1,36 @@
-import { Movie, MoviesFromMovieverse } from "~/types/movies";
-import { User } from "~/types/users";
+import { TMovie } from "~/types/movies";
 import { supabaseClient } from "./supabase";
-import { apiKey, genreBasedMovieSearchUrl, getUserGenreMap, options, popularMovieUrl, trendingMovieUrl, userSpecialMovieDistribution } from "~/utils/helpers";
-import { genres } from "~/app.config";
+import { apiKey, genreBasedMovieSearchUrl, options, popularMovieUrl, trendingMovieUrl } from "~/utils/helpers";
+import { TvShow } from "~/types/tvshow";
+import { TPerson } from "~/types/people";
 
 export const getPopularMovies = async (page: number) => {
     console.log(`Fetching the page:${page}`);
 
-    const data = await fetch(popularMovieUrl(page,apiKey), options)
+    const data = await fetch(popularMovieUrl(page, apiKey), options)
         .then(res => res.json())
         .catch(err => console.error(`tmdb error:${err}`));
 
-    return data.results as Movie[];
+    return data.results as TMovie[];
 }
 
 export const getTrendMovies = async (page: number) => {
-    const data = await fetch(trendingMovieUrl(page,apiKey), options)
+    const data = await fetch(trendingMovieUrl(page, apiKey), options)
         .then(res => res.json())
         .catch(err => console.error(`tmdb error:${err}`));
 
-    return data.results as Movie[];
+    return data.results as TMovie[];
 }
 
 export const getGenreMovies = async (genreId: number, page: number) => {
-    const data = await fetch(genreBasedMovieSearchUrl(genreId, page,apiKey), options)
+    const data = await fetch(genreBasedMovieSearchUrl(genreId, page, apiKey), options)
         .then(res => res.json())
         .catch(err => console.error(`tmdb error:${err}`));
 
-    return data.results as Movie[];
+    return data.results as TMovie[];
 }
 
-export const favoriteMovie = async (movie: Movie, user: User) => {
-    const { id: movieId,
-        adult,
-        genre_ids,
-        original_language,
-        overview,
-        popularity,
-        poster_path,
-        title,
-        vote_average,
-        vote_count, } = movie;
 
-    const { data: existingMovie, error: existingMovieError } = await supabaseClient
-        .from('movies')
-        .select()
-        .eq('movieId', movieId);
-
-    if (existingMovieError) throw new Error(existingMovieError.message);
-
-    if (existingMovie?.length > 0) {
-        const { data: updatedMovie, error: updatedMovieError } = await supabaseClient
-            .from('movies')
-            .update({
-                favorited_from: [...existingMovie[0].favorited_from, user.id]
-            })
-            .eq('movieId', movieId)
-            .select('*')
-
-        if (updatedMovieError) throw new Error(updatedMovieError.message);
-
-        const { data: updatedUser, error: updatedUserError } = await supabaseClient
-            .from('users')
-            .update({
-                favoriteMovies: [...user.favoriteMovies, updatedMovie[0].id],
-                favoriteGenres: [...user.favoriteGenres, ...movie.genre_ids]
-            })
-            .eq('id', user?.id)
-            .select("*")
-
-        if (updatedUserError) throw new Error(updatedUserError.message);
-
-        return { updatedMovie, updatedUser };
-    } else {
-        const { data: insertMovie, error: insertMovieError } = await supabaseClient
-            .from('movies')
-            .insert({
-                movieId,
-                adult,
-                genre_ids,
-                original_language,
-                overview,
-                popularity,
-                poster_path,
-                title,
-                vote_average,
-                vote_count,
-                favorited_from: [user.id]
-            })
-            .select('*')
-
-        if (insertMovieError || !insertMovie) throw new Error(`${insertMovieError.message} `);
-
-        const { data: updatedUser, error: updateUserError } = await supabaseClient
-            .from("users")
-            .update({
-                favoriteMovies: [...user.favoriteMovies, insertMovie[0].id],
-                favoriteGenres: [...user.favoriteGenres, ...movie.genre_ids]
-            })
-            .eq("id", user.id)
-            .select("*")
-
-        if (updateUserError) throw new Error(updateUserError.message);
-
-        return { updatedUser, insertMovie };
-    }
-}
-
-export const unfavMovie = async (movie: MoviesFromMovieverse, user: User) => {
-    const { data, error } = await supabaseClient
-        .from('movies')
-        .update({
-            favorited_from: movie.favorited_from.filter(uid => uid !== user?.id)
-        })
-        .eq('id', movie.id)
-        .select('*');
-
-    if (error) throw new Error(error.message);
-
-    const { error: unfavFromUserError } = await supabaseClient
-        .from("users")
-        .update({
-            favoriteMovies: user.favoriteMovies.filter(mid => mid !== movie.id)
-        })
-        .eq('id', user.id);
-
-    if (unfavFromUserError) throw new Error(unfavFromUserError.message);
-    return data[0] as MoviesFromMovieverse
-}
-
-export const getMoviesFromDb = async (): Promise<MoviesFromMovieverse[]> => {
-    const { data: favoriteMovies, error } = await supabaseClient
-        .from('movies')
-        .select("*")
-
-    if (error || favoriteMovies === null) {
-        throw new Error(`Error fetching favorite movies:${error || "an error occured"}`);
-    }
-
-    return favoriteMovies as MoviesFromMovieverse[];
-}
-
-export const saveMovieIntoDb = async (movie:Movie) => {
-    const {id: movieId,
-        adult,
-        genre_ids,
-        original_language,
-        overview,
-        popularity,
-        poster_path,
-        title,
-        vote_average,
-        vote_count} = movie;
-    
-    const {error} = await supabaseClient
-    .from('movies')
-    .insert({
-        movieId,
-        adult,
-        genre_ids,
-        original_language,
-        overview,
-        popularity,
-        poster_path,
-        title,
-        vote_average,
-        vote_count,
-    })
-    if(error) throw new Error(error.message);
-    
-}
 
 export const getMovieTrailer = async (movieId: string) => {
     const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`, options)
@@ -190,60 +51,71 @@ export const getMovie = async (movieId: string) => {
     return data;
 }
 
-export const getMovieFromDb = async (movieId: string) => {
+async function insertItem<T>(item: T, table: string) {
+    const { error: insertError } = await supabaseClient
+        .from(table)
+        .insert(item as T);
 
+    if (insertError) {
+        console.log(insertError);
+        throw new Error(insertError.message);
+    }
+}
+
+export async function findInDb<T extends TMovie | TvShow | TPerson>(item: T, table: string) {
+
+    const { data, error } = await supabaseClient
+        .from(table)
+        .select('*')
+        .eq('id', item.id)
+
+    if (error && error.message !== 'No rows returned' && !data) {
+        throw new Error(error.message);
+    }
+
+    if (data && data.length < 1) {
+        await insertItem<T>(item, table);
+    }
+}
+
+
+export const getMovieFromDb = async (movieId: number) => {
     const { data, error } = await supabaseClient.from('movies')
         .select("*")
-        .eq("movieId", movieId);
+        .eq("id", movieId);
 
     if (error) throw new Error(error.message);
 
-    return data[0] as MoviesFromMovieverse
+    return data[0] as TMovie
 }
 
-export const getSpecialMoviesForUser = async (user: User) => {
-    const genremap = getUserGenreMap(user);
-    const movies = userSpecialMovieDistribution(genremap);
-    const specialForUser: Movie[] = []
+export const getMoviesFromDb = async () => {
+    const { data, error } = await supabaseClient
+        .from('movies')
+        .select('*');
 
-
-    for (let i = 0; specialForUser.length < 10; i++) {
-        const { results }: { results: Movie[] } = await fetch(genreBasedMovieSearchUrl(movies[i].genre, 1,apiKey)).then(res => res.json())
-        for (let z = 0; z < movies[i].amount; z++) {
-            const randomAmount = Math.floor(Math.random() * 10);
-            if (specialForUser.some(item => item.title === results[z + randomAmount].title)) {
-                specialForUser.push(results[z + randomAmount + 1]);
-            } else {
-                specialForUser.push(results[z + randomAmount])
-            }
-        }
-    }
-    return specialForUser;
-}
-
-export const getMoviesFromTop3Genres = async (user: User) => {
-    const topGenresOfUser = getUserGenreMap(user);
-    const results = [];
-
-    for (let i = 0; i < 3; i++) {
-        const { results: topMovies }: { results: Movie[] } = await fetch(genreBasedMovieSearchUrl(topGenresOfUser[i].genre, 1,apiKey)).then(res => res.json());
-        results.push({
-            genreName: genres.find(genre => genre.id === topGenresOfUser[i].genre)?.name,
-            movies: topMovies
-        })
+    if (error) {
+        console.error('Error fetching movies:', error);
+        return null;
     }
 
-    return results
+    return data[0] as TMovie[];
 }
 
-export const getMostlyLikedMoviesFromMovieverse = async () => {
-    const movies = await getMoviesFromDb();
+export const saveMovieIntoDb = async (movie: TMovie) => {
+    const { data: existingMovies, error: selectError } = await supabaseClient
+        .from('movies')
+        .select('id')
+        .eq('id', movie.id);
 
-    const filteredMovies = movies.filter(movie => movie.favorited_from.length > 0);
-    const sortedMovies = filteredMovies.sort((a, b) => b.favorited_from.length - a.favorited_from.length);
+    if (selectError) throw new Error(selectError.message);
 
-    //switch the database id's with tmdb ids
-    sortedMovies.forEach(movie => movie.id = movie.movieId);
+    if (!existingMovies || existingMovies.length === 0) {
+        const { error: insertError } = await supabaseClient
+            .from('movies')
+            .insert(movie);
 
-    return sortedMovies
+        if (insertError) throw new Error(insertError.message);
+    }
 }
+

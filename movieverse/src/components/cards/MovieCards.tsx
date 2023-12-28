@@ -1,32 +1,41 @@
-import { MovieComponent } from "~/types/movies";
 import { Card } from "./Card";
-import { getMovieImageUrl } from "~/utils/helpers";
-import { useMovie } from "~/hooks/useMovie";
+import { getMovieImageUrl, isFavorited } from "~/utils/helpers";
 import { useNavigate } from "react-router-dom";
+import { TMovie } from "~/types/movies";
+import { useUsersStore } from "~/zustand/usersStore";
 
-export const MovieCards: MovieComponent = ({ moviesFromTmdb, moviesFromDb, handleFav, isLoading }) => {
-    const { movieFromDb} = useMovie();
-    const navigate = useNavigate();
-
+type TMovieCards = {
+  moviesFromTmdb: TMovie[];
+  handleFav: (movie: TMovie) => void;
+};
+export const MovieCards: React.FC<TMovieCards> = ({
+  moviesFromTmdb,
+  handleFav,
+}) => {
+  const navigate = useNavigate();
+  const {favoriteMovies} = useUsersStore();
+  
   return (
     <>
-      {moviesFromTmdb.map((movie, index) => {
-        const isFavorited = moviesFromDb.some(dbMovie => dbMovie.id === movie.id);
-        const onClickFavorite = () => handleFav(movie,movieFromDb);
-        const onClickDetails = () => navigate(`/movie/${movie.id}`);
-
-        return (
+      {moviesFromTmdb.map((movie, index) =>{
+            const favorited = isFavorited(favoriteMovies!,movie);
+        return(
           <Card key={index}>
-            <Card.CardHeader imgAddress={getMovieImageUrl(movie.poster_path ?? movie.backdrop_path ?? "")} title={movie.title} />
+            <Card.CardHeader
+              imgAddress={getMovieImageUrl(
+                movie.poster_path ?? movie.backdrop_path ?? ""
+              )}
+              title={movie.title}
+            />
             <Card.CardBody title={movie.title} overview={movie.overview} />
-            <Card.CardFooter 
-              isLoading={isLoading} 
-              isFavorited={isFavorited} 
-              onClickFavorite={onClickFavorite} 
-              onClickDetails={onClickDetails} 
+            <Card.CardFooter
+              isLoading={false}
+              isFavorited={favorited}
+              onClickFavorite={() => handleFav(movie)}
+              onClickDetails={() => navigate(`/movie?m=${movie.id}`)}
             />
           </Card>
-        );
+        )
       })}
     </>
   );

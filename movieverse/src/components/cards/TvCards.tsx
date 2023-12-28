@@ -1,24 +1,23 @@
 import React from 'react'
 import { TvShow } from '~/types/tvshow'
 import { Card } from './Card'
-import { getTvShowImageUrl } from '~/utils/helpers'
+import { getTvShowImageUrl, isFavorited } from '~/utils/helpers'
 import { useNavigate } from 'react-router-dom';
+import { useUsersStore } from '~/zustand/usersStore';
 
 export const TvCards: React.FC<{
   tv_shows: TvShow[];
-  isLoading: boolean;
   handleFav: (tvShow: TvShow) => void;
-  tvShowsFromDb: TvShow[];
-}> = ({ tv_shows, isLoading, handleFav, tvShowsFromDb }) => {
+}> = ({ tv_shows, handleFav }) => {
   const navigate = useNavigate();
-
+  const {favoriteTvShows} = useUsersStore();
 
   return (
     <>
       {tv_shows.map((tv_show, key) => {
-        const isFavorited = tvShowsFromDb.some(dbTvShow => dbTvShow.id === tv_show.id);
+        const favorited = isFavorited(favoriteTvShows!,tv_show);
         const onClickFavorite = () => handleFav(tv_show);
-        const onClickDetails = () => {navigate(`/tv/${tv_show.id}`)};
+        const onClickDetails = () => {navigate(`/tv?t=${tv_show.id}`)};
 
         return (
           <Card key={key}>
@@ -28,8 +27,8 @@ export const TvCards: React.FC<{
             />
             <Card.CardBody title={tv_show.original_name} overview={tv_show.overview}/>
             <Card.CardFooter 
-              isLoading={isLoading} 
-              isFavorited={isFavorited} 
+              isLoading={false} 
+              isFavorited={favorited} 
               onClickFavorite={onClickFavorite} 
               onClickDetails={onClickDetails} 
             />

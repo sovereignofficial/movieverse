@@ -3,14 +3,14 @@ import { useMovies } from "~/hooks/useMovies";
 import { MovieFilters } from "./MovieFilters";
 import { genres } from "~/app.config";
 import { useMovieStore } from "~/zustand/movieStore";
-import { User } from "~/types/users";
-import { useFavoriteMovies } from "~/hooks/useFavoriteMovies";
+import { useFavorite } from "~/hooks/useFavorite";
 
-export const MoviesMedia: React.FC<{user:User}> = ({user}) => {
+export const MoviesMedia: React.FC = () => {
   
   const { moviesFromTmdb, currentFilter } = useMovies();
-  const {moviesFromDb, handleFav,isLoading} = useFavoriteMovies();
+  const {handleFavMovie} = useFavorite();
   const {incrementPage} = useMovieStore();
+
 
   return (
     <div className="space-y-5">
@@ -21,11 +21,8 @@ export const MoviesMedia: React.FC<{user:User}> = ({user}) => {
 
       {moviesFromTmdb.length > 0 ? (
         <div className="page-body-cards">
-          <MovieCards user={user} moviesFromTmdb={moviesFromTmdb} 
-          handleFav={handleFav}
-          movie={moviesFromTmdb[0]}
-          moviesFromDb={moviesFromDb} 
-          isLoading={isLoading} />
+          <MovieCards moviesFromTmdb={moviesFromTmdb} 
+          handleFav={handleFavMovie}/>
         </div>
       ) : (
         <div className="w-full ">

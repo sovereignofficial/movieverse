@@ -1,23 +1,23 @@
 import { TPerson } from "~/types/people";
 import { Card } from "./Card";
 import { CardBody } from "./CardBody";
-import { getPersonImageUrl } from "~/utils/helpers";
+import { getPersonImageUrl, isFavorited } from "~/utils/helpers";
 import { useNavigate } from "react-router-dom";
+import { useUsersStore } from "~/zustand/usersStore";
 
 export const PeopleCards: React.FC<{
   people: TPerson[];
-  isLoading: boolean;
   handleFav: (person: TPerson) => void;
-  peopleFromDb: TPerson[];
-}> = ({ people, isLoading, handleFav, peopleFromDb }) => {
+}> = ({ people,handleFav }) => {
   const navigate =useNavigate();
+  const {favoritePeople} = useUsersStore();
 
   return (
     <>
       {people.map((person, key) => {
-        const isFavorited = peopleFromDb.some(dbPerson => dbPerson.id === person.id);
+        const favorited = isFavorited(favoritePeople!,person);
         const onClickFavorite = () => handleFav(person);
-        const onClickDetails = () => { navigate(`/person/${person.id}`)};
+        const onClickDetails = () => { navigate(`/person?p=${person.id}`)};
 
         return (
           <Card key={key}>
@@ -27,8 +27,8 @@ export const PeopleCards: React.FC<{
             />
             <CardBody title={person.original_name} overview={""}/>
             <Card.CardFooter 
-              isLoading={isLoading} 
-              isFavorited={isFavorited} 
+              isLoading={false} 
+              isFavorited={favorited} 
               onClickFavorite={onClickFavorite} 
               onClickDetails={onClickDetails} 
             />

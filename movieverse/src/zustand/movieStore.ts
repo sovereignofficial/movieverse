@@ -1,29 +1,23 @@
 import { create } from "zustand"
-import { Movie, MoviesFromMovieverse } from "~/types/movies"
+import { TMovie } from "~/types/movies"
 
 const MIN_PAGE=1;
 
 type TMovieStore = {
     page:number,
-    moviesFromTmdb:Movie[],
-    moviesFromDb:MoviesFromMovieverse[],
+    moviesFromTmdb:TMovie[],
     currentFilter:string | number,
-    setMovies:(movies:Movie[])=>void,
+    setMovies:(movies:TMovie[])=>void,
     resetMovies:()=>void,
     setFilter:(filter:string | number) => void,
     incrementPage:() => void,
     resetPages:()=> void,
-    setFavoriteMovies:(movies:MoviesFromMovieverse[])=>void,
-    setUnfavoriteMovie:(movie:MoviesFromMovieverse)=>void,
 }
 
 export const useMovieStore = create<TMovieStore>((set)=>({
     page:MIN_PAGE,
     moviesFromTmdb:[],
-    moviesFromDb:[],
     currentFilter:"popular",
-    setFavoriteMovies:(newFavoriteMovies)=>set(()=>({moviesFromDb:newFavoriteMovies})),
-    setUnfavoriteMovie:(movie)=>set((state)=>({moviesFromDb:state.moviesFromDb.filter(favMovie=> favMovie.id !== movie.id)})),
     setMovies:(newMovies)=>set((state)=>({moviesFromTmdb:[...state.moviesFromTmdb,...newMovies]})),
     resetMovies:()=>set(()=>({moviesFromTmdb:[]})),
     setFilter:(filter)=>set(()=>({currentFilter:filter})),

@@ -49,11 +49,11 @@ export const App = () => {
             },
             {
               path: "/tv",
-              element: <PersonDetails />,
+              element:<TvShowDetails /> ,
             },
             {
               path: "/person",
-              element: <TvShowDetails />,
+              element: <PersonDetails /> ,
             },
           ],
         },

@@ -1,27 +1,22 @@
 import { Field } from "formik";
 import { ReactNode } from "react";
 
-export const TextInput:React.FC<{
-    name:string
-    placeholder:string,
-    maxLength:number,
-    submitBtn?:ReactNode
-}> = ({
-    name,
-    maxLength,
-    submitBtn,
-    placeholder
-}) => {
+export const TextInput: React.FC<{
+  name: string;
+  placeholder: string;
+  maxLength: number;
+  submitBtn?: ReactNode;
+}> = ({ name, maxLength, submitBtn, placeholder }) => {
   return (
-    <div className="bg-zinc-700 rounded-full flex items-center py-1 px-2">
+    <div className="bg-zinc-800 rounded-full grid grid-cols-12 place-items-center h-10 w-full gap-1 p-1">
       <Field
-        className="text-center font-medium p-1 bg-transparent w-full h-full outline-none "
+        className="text-center font-medium p-1 bg-transparent w-full h-full outline-none rounded-full col-span-11"
         type={"text"}
         name={name}
         placeholder={placeholder}
-        maxLength= {maxLength}
+        maxLength={maxLength}
       />
-      {submitBtn}
+      <div className="col-span-1">{submitBtn}</div>
     </div>
   );
 };

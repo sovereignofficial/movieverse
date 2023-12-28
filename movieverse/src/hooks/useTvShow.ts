@@ -1,15 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
-import { getTVShow } from '../services/apiTvShow';
+import { getTVShow, getTvShowTrailer } from '../services/apiTvShow';
 import { useSearchParams } from 'react-router-dom';
 
 export const useTVShow = () => {
    const [searchParams] = useSearchParams();
    const tvShowId = searchParams.get('t') ?? "";
+   console.log(tvShowId)
 
    const { data: tvshow } = useQuery({
-      queryKey: ['get-tv'],
+      queryKey: ['get-tv',tvShowId],
       queryFn: () => getTVShow(tvShowId)
    });
 
-   return { tvshow };
+   const { data: trailer } = useQuery({
+      queryFn: () => getTvShowTrailer(tvShowId),
+      queryKey: ['trailer', tvShowId],
+
+  });
+
+   return { tvshow,trailer };
 };

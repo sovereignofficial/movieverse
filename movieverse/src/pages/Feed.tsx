@@ -1,9 +1,9 @@
 import { FeedSection } from "~/components/FeedSection";
-import { useFeed } from "~/hooks/useFeed";
+import { useRecommendor } from "~/hooks/useRecommendor";
 
 export const Feed = () => {
-  const { mostlyLiked, top3genres, specialMoviesForUser } = useFeed();
-
+  const {specialMoviesForUser, top3genres, mostlyLiked} = useRecommendor();
+  
   return (
     <div className="page space-y-5">
       <div className="page-header">
