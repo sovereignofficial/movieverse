@@ -14,6 +14,8 @@ import { AppLayout } from "./components/layout/AppLayout";
 import { LandingLayout } from "./components/layout/LandingLayout";
 import { PersonDetails } from "./pages/PersonDetails";
 import { TvShowDetails } from "./pages/TvShowDetails";
+import { Settings } from "./pages/Settings";
+import { Activities } from "./pages/Activities";
 
 export const App = () => {
   const routes = useRoutes([
@@ -38,10 +40,28 @@ export const App = () => {
             {
               path: "/account",
               element: <Account />,
-            },
-            {
-              path: "/favorites",
-              element: <Favorites />,
+              children: [
+                {
+                  index:true,
+                  element: <Activities />,
+                },
+                {
+                  path: "tv",
+                  element: <Favorites />,
+                },
+                {
+                  path: "movies",
+                  element: <Favorites />,
+                },
+                {
+                  path: "people",
+                  element: <Favorites />,
+                },
+                {
+                  path:'settings',
+                  element:<Settings/>
+                }
+              ],
             },
             {
               path: "/movie",
@@ -49,11 +69,11 @@ export const App = () => {
             },
             {
               path: "/tv",
-              element:<TvShowDetails /> ,
+              element: <TvShowDetails />,
             },
             {
               path: "/person",
-              element: <PersonDetails /> ,
+              element: <PersonDetails />,
             },
           ],
         },
@@ -63,8 +83,8 @@ export const App = () => {
       element: <LandingLayout />,
       children: [
         {
-          path:'/',
-          element:<Home/>
+          path: "/",
+          element: <Home />,
         },
         {
           path: "/auth",

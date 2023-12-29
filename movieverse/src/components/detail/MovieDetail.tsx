@@ -6,15 +6,26 @@ import { useUsersStore } from "~/zustand/usersStore";
 import { MediaDetail } from "./MediaDetail";
 import { ExtraInfoItem } from "./ExtraInfoItem";
 import { useEffect } from "react";
+import { useBests } from "~/hooks/useBests";
 
 export const MovieDetail: React.FC<{movie: TMovieDetail}> = ({ movie }) => {
   const { handleFavMovie, getFavoritesCount, favCount } = useFavorite();
-  const { favoriteMovies } = useUsersStore();
+  const { favoriteMovies,bests,userId } = useUsersStore();
   const favorited =(favoriteMovies && movie &&  isFavorited(favoriteMovies, movie)) || false;
+  const {pickBestFn} = useBests();
 
   useEffect(() => {
     getFavoritesCount({ itemId: movie.id, itemType: "favoriteMovies" });
   }, [getFavoritesCount, movie.id]);
+
+  const isBest = ():boolean =>{
+     const findBest = bests?.some(item=> item.title === movie.title);
+     return findBest ?? false
+  }
+
+  const handlePickBest = () => {
+     pickBestFn({item:movie,userId});
+  }
 
   return (
     <MediaDetail
@@ -38,6 +49,8 @@ export const MovieDetail: React.FC<{movie: TMovieDetail}> = ({ movie }) => {
       handleFav={() => handleFavMovie(movie)}
       favorited={favorited}
       favorites={favCount}
+      pickBest={handlePickBest}
+      isBest = {isBest()}
     />
   );
 };

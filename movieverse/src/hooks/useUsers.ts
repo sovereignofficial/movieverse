@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect } from "react";
 import { getCurrentUser, signIn,signOut,signUp } from "~/services/apiAuth";
 import { getUserFavorites } from "~/services/apiFavorites";
@@ -7,21 +7,33 @@ import { useUsersStore } from "~/zustand/usersStore";
 
 export const useUsers = () => {
     const {setUserInfo} = useUsersStore();
+    const queryCli = useQueryClient();
     
     const {mutate:registerUser, isError:isRegisterError,error:registerError} = useMutation({
         mutationFn:(newUser:ISignUp)=>signUp(newUser),
         mutationKey:['register'],
+        onSuccess:()=>{
+            queryCli.invalidateQueries();
+        }
     });
 
     const {mutate:loginUser, isError:isLoginError,error:loginError} = useMutation({
         mutationFn:(credentials:ISignIn)=>signIn(credentials),
         mutationKey:['login'],
-
+        onSuccess:()=>{
+            queryCli.invalidateQueries();
+        },
+        onError:(err)=>{
+            console.error(err)
+        }
     });
 
     const {mutate:logOutUser, isError:isLogOutError,error:logOutError} = useMutation({
         mutationFn:()=>signOut(),
         mutationKey:['logout'],
+        onSuccess:()=>{
+            queryCli.invalidateQueries();
+        }
     });
 
     const {mutate:getUserFavoritesFn} = useMutation({
@@ -45,10 +57,14 @@ export const useUsers = () => {
 
     
     useEffect(() => {
-        if (authSuccess && !isAuthError && currUser) {       
-            setUserInfo({userId:currUser.id});
+        if (authSuccess && !isAuthError && currUser) {  
+            const userData = currUser.user_metadata;
+            const email = currUser.email
+            const id = currUser.id;
+
+            setUserInfo({userId:id,fullName:userData.fullName, email:email, gender:userData.gender, age:userData.age});
             getUserFavoritesFn(currUser.id);
-        }
+        }``
     }, [authSuccess, isAuthError, currUser, setUserInfo,getUserFavoritesFn]);
     
   const isAuthenticated = currUser && currUser.role === "authenticated" ? true :false;

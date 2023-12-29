@@ -10,10 +10,12 @@ interface MediaDetailProps<T extends TMovie | TvShow | TPerson> {
     renderInfo: () => JSX.Element;
     handleFav: () => void;
     favorited: boolean;
-    favorites:number
+    favorites:number,
+    pickBest?:()=>void,
+    isBest?:boolean,
    }
    
-export const MediaDetail: React.FC<MediaDetailProps<TMovie | TvShow>> = ({ media, detailImage , renderInfo, handleFav, favorited,favorites }) => {
+export const MediaDetail: React.FC<MediaDetailProps<TMovie | TvShow>> = ({ media, detailImage , renderInfo, handleFav, favorited,favorites,pickBest,isBest }) => {
     return (
       <div className="grid grid-cols-12 gap-2 page-body ">
         <div className="col-span-3">
@@ -27,6 +29,8 @@ export const MediaDetail: React.FC<MediaDetailProps<TMovie | TvShow>> = ({ media
             favorites={favorites}
             handleFav={handleFav}
             favorited={favorited}
+            pickBest={pickBest}
+            isBest={isBest}
           />
         </div>
       </div>

@@ -8,10 +8,6 @@ const appRoutes = [
         url: '/feed',
     },
     {
-        name: 'Favorites',
-        url: '/favorites'
-    },
-    {
         name: 'Account',
         url: '/account',
     },
