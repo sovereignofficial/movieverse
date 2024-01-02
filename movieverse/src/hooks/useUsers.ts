@@ -62,7 +62,7 @@ export const useUsers = () => {
             const email = currUser.email
             const id = currUser.id;
 
-            setUserInfo({userId:id,fullName:userData.fullName, email:email, gender:userData.gender, age:userData.age});
+            setUserInfo({userId:id,fullName:userData.fullName, email:email, gender:userData.gender, age:userData.age,profileUrl:userData.profile});
             getUserFavoritesFn(currUser.id);
         }``
     }, [authSuccess, isAuthError, currUser, setUserInfo,getUserFavoritesFn]);

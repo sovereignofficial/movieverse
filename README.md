@@ -13,19 +13,20 @@
 
 ## Routes
 
-Home => /
-Movies => /movies?f=:genreId
-Movie Details => /movie?m=:movieID
-Tv Show Details => /tv?t=:tvId
-Person Details => /person?p=:personId
-Search => /search?q=:searchQuery
-Special Feed For User => /feed
-Account => /account
-Favorite Tv Shows => /account/tv
-Favorite People => /account/people
-Favorite Movies => /account/movies
-Login => /auth/login
-Register => /auth/register
+* Home => /
+* Movies => /movies?f=:genreId
+* Movie Details => /movie?m=:movieID
+* Tv Show Details => /tv?t=:tvId
+* Person Details => /person?p=:personId
+* Search => /search?q=:searchQuery
+* Special Feed For User => /feed
+* Account => /account
+* Favorite Tv Shows => /account/tv
+* Favorite People => /account/people
+* Favorite Movies => /account/movies
+* Settings => /account/settings
+* Login => /auth/login
+* Register => /auth/register
 
 ## Technology Stack
 
@@ -41,3 +42,4 @@ Register => /auth/register
 * Icons => React Icons
 * Video Player => React Player
 * Carousels => Swiperjs
+* Drag and Drop => React Dropzone

@@ -5,7 +5,7 @@ import { TvShow } from '~/types/tvshow';
 
 type TUsersStore = {
     userId:string,
-    imageUrl:string | null,
+    profileUrl:string | null,
     fullName:string,
     email:string,
     age:number,
@@ -24,7 +24,7 @@ type TUsersStore = {
 }
 export const useUsersStore = create<TUsersStore>((set) => ({
     userId:'',
-    imageUrl: null,
+    profileUrl: null,
     fullName: '',
     email: '',
     age: 0,
