@@ -22,10 +22,10 @@ export const PeopleCards: React.FC<{
         return (
           <Card key={key}>
             <Card.CardHeader
-              title={person.original_name}
+              title={person.name}
               imgAddress={getPersonImageUrl(person.profile_path ?? "")}
             />
-            <CardBody title={person.original_name} overview={""}/>
+            <CardBody title={person.name} overview={""}/>
             <Card.CardFooter 
               isLoading={false} 
               isFavorited={favorited} 

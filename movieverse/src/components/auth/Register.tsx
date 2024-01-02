@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUsers } from "~/hooks/useUsers";
-import { RegisterUser } from "~/types/users";
+
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -9,15 +9,17 @@ export const Register = () => {
   const fullName = useRef("");
   const age = useRef(0);
   const password = useRef("");
+  const gender = useRef(0);
   const {registerUser} = useUsers();
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const userData:RegisterUser = {
+    const userData = {
       email:email.current,
       fullName:fullName.current,
       password:password.current,
-      age:age.current
+      age:age.current,
+      gender:gender.current
     }
     registerUser(userData);
   };
@@ -40,6 +42,7 @@ export const Register = () => {
           placeholder="full name"
         />
         <input onChange={(e)=> age.current = Number(e.target.value)} type="number" min={0} placeholder="age"/>
+        <input onChange={(e)=> age.current = Number(e.target.value)} type="number" min={0} placeholder="gender"/>
         <input
           onChange={(e) => (password.current = e.target.value)}
           type="password"

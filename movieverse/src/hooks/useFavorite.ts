@@ -78,7 +78,7 @@ export const useFavorite = () => {
   const { mutate: favPersonFn } = useMutation({
     mutationFn: async ({ userId, item }: TFavParams<TPerson>) => {
       favPerson(item, userId);
-      setFavCount((prevCount: number) => prevCount > 0 ? prevCount - 1 : 0);
+      setFavCount((prevCount: number) => prevCount + 1);
     },
     mutationKey: ['fav-person'],
     onError: (err) => {

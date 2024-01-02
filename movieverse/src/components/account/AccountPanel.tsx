@@ -3,7 +3,7 @@ import { PanelNav } from "./PanelNav"
 
 export const AccountPanel = () => {
   return (
-    <section className="col-span-9 w-full h-full">
+    <section className="col-span-8 w-full h-full">
         <PanelNav/>
         <Outlet/>
     </section>

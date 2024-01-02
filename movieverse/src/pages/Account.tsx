@@ -10,10 +10,10 @@ export const Account = () => {
   return (
     <div className="page">
       <div className="page-header">
-        <AccountHeader bests={bests} />
+        {bests &&  <AccountHeader bests={bests} />}
       </div>
       <div className="w-full grid grid-cols-12">
-        <AccountSidePanel bests={bests} />
+        {bests && <AccountSidePanel bests={bests} />}
         <AccountPanel/>
       </div>
     </div>

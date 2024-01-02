@@ -10,21 +10,25 @@ import { useBests } from "~/hooks/useBests";
 
 export const MovieDetail: React.FC<{movie: TMovieDetail}> = ({ movie }) => {
   const { handleFavMovie, getFavoritesCount, favCount } = useFavorite();
-  const { favoriteMovies,bests,userId } = useUsersStore();
+  const { favoriteMovies,userId,bests } = useUsersStore();
   const favorited =(favoriteMovies && movie &&  isFavorited(favoriteMovies, movie)) || false;
-  const {pickBestFn} = useBests();
+  const {pickBestFn,isBest,setIsBest,removeFromBestsFn} = useBests();
 
   useEffect(() => {
     getFavoritesCount({ itemId: movie.id, itemType: "favoriteMovies" });
   }, [getFavoritesCount, movie.id]);
 
-  const isBest = ():boolean =>{
-     const findBest = bests?.some(item=> item.title === movie.title);
-     return findBest ?? false
-  }
+  useEffect(()=>{
+    if(bests){
+      const foundBest = bests.some(item => item.id === movie.id);
+      foundBest
+      ? setIsBest(true)
+      : setIsBest(false);
+    }
+  },[bests,setIsBest,movie.id]);
 
   const handlePickBest = () => {
-     pickBestFn({item:movie,userId});
+    isBest ? removeFromBestsFn({userId,itemId:movie.id}) : pickBestFn({item:movie,userId});
   }
 
   return (
@@ -50,7 +54,7 @@ export const MovieDetail: React.FC<{movie: TMovieDetail}> = ({ movie }) => {
       favorited={favorited}
       favorites={favCount}
       pickBest={handlePickBest}
-      isBest = {isBest()}
+      isBest = {isBest}
     />
   );
 };

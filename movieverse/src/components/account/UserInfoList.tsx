@@ -1,17 +1,31 @@
-import { useUsersStore } from "~/zustand/usersStore"
+import { useUsersStore } from "~/zustand/usersStore";
 
 export const UserInfoList = () => {
-    const {fullName,email,age,gender} = useUsersStore();
-
+  const { fullName, email, age, gender } = useUsersStore();
+  const getGender = (gender: number) => {
+    return gender === 0 ? "Female" : "Male";
+  };
   return (
     <div className="bg-zinc-900 p-5 rounded-xl space-y-4">
-        <h3>Credentials</h3>
-        <ul>
-            <li>Full name {fullName}</li>
-            <li>Email address {email}</li>
-            <li>Age {age} years old.</li>
-            <li>Gender {gender}</li>
-        </ul>
+      <h3>Credentials</h3>
+      <ul>
+        <li className="grid grid-cols-2">
+          <p className="font-medium">Full name</p>
+          <p>{fullName}</p>
+        </li>
+        <li className="grid grid-cols-2">
+          <p className="font-medium">Email address</p>
+          <p>{email}</p>
+        </li>
+        <li className="grid grid-cols-2">
+          <p className="font-medium">Age</p>
+          <p>{age} years old</p>
+        </li>
+        <li className="grid grid-cols-2">
+          <p className="font-medium">Gender </p>
+          <p>{getGender(gender)}</p>
+        </li>
+      </ul>
     </div>
-  )
-}
+  );
+};
