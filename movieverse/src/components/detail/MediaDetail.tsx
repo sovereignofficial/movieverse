@@ -30,7 +30,7 @@ export const MediaDetail: React.FC<MediaDetailProps<TMovie | TvShow>> = ({
       <div className="col-span-3">
         <DetailImage {...detailImage} />
       </div>
-      <div className="col-span-9 space-y-3 p-5 h-full w-full bg-zinc-900 rounded-xl flex flex-col justify-between">
+      <div className="col-span-9 space-y-3 p-5 h-full w-full bg-gray-900 rounded-xl flex flex-col justify-between">
         <h2>Overview</h2>
         {renderInfo()}
         <Rates

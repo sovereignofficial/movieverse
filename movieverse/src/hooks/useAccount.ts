@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
-import { uploadProfilePic } from "~/services/apiAccount"
+import { uploadProfilePic,updateCredentials,updatePassword } from "~/services/apiAccount"
+import { TCredentials } from "~/types/users";
 import { useUsersStore } from "~/zustand/usersStore"
 
 export const useAccount = () => {
@@ -17,5 +18,21 @@ export const useAccount = () => {
         }
     })
 
-    return {uploadProfilePicFn}
+    const {mutate:updateCredentialsFn} = useMutation({
+        mutationFn:({email,credentials}:{email:string,credentials:TCredentials})=>updateCredentials(email,credentials),
+        mutationKey:['update-credentials'],
+        onError:(err)=>{
+            console.error(err);
+        }
+    })
+
+    const {mutate:updatePasswordFn} = useMutation({
+        mutationFn:({email,newPassword}:{email:string,newPassword:string})=>updatePassword(email,newPassword),
+        mutationKey:['update-password'],
+        onError:(err)=>{
+            console.error(err);
+        }
+    })
+
+    return {uploadProfilePicFn, updateCredentialsFn, updatePasswordFn}
 }

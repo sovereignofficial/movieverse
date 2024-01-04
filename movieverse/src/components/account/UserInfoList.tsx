@@ -6,7 +6,7 @@ export const UserInfoList = () => {
     return gender === 0 ? "Female" : "Male";
   };
   return (
-    <div className="bg-zinc-900 p-5 rounded-xl space-y-4">
+    <div className="bg-gray-900 p-5 rounded-xl space-y-4">
       <h3>Credentials</h3>
       <ul>
         <li className="grid grid-cols-2">

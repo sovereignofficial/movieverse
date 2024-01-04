@@ -24,7 +24,7 @@ export const PersonDetail: React.FC<{ person: TPerson }> = ({ person }) => {
           alt={person.name}
         />
       </div>
-      <div className="col-span-9 space-y-3 p-5 h-full w-full bg-zinc-900 rounded-xl flex flex-col justify-between">
+      <div className="col-span-9 space-y-3 p-5 h-full w-full bg-gray-900 rounded-xl flex flex-col justify-between">
         <h2>Biography</h2>
         <p>Birth Date: {person.gender}</p>
         <p>Nationality: {person.known_for_department}</p>

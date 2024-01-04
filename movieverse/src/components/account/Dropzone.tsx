@@ -54,7 +54,7 @@ export const Dropzone = () => {
   };
 
   return (
-    <div className="bg-zinc-900 p-4 w-full rounded-xl text-center space-y-5">
+    <div className="bg-gray-900 p-4 w-full rounded-xl text-center space-y-5">
       <div>
         <div {...getRootProps()}>
           <input {...getInputProps()} />
@@ -76,7 +76,7 @@ export const Dropzone = () => {
 
       {files.length > 0 && (
         <button className="btn-primary" onClick={handleUpload}>
-          Update
+          Update profile
         </button>
       )}
 

@@ -22,3 +22,5 @@ export interface ISignUp{
     gender:number,
     fullName:string
 }
+
+export type TCredentials ={fullName: string, age: number, gender: number}

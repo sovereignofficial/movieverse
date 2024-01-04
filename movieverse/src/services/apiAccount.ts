@@ -1,3 +1,4 @@
+import { TCredentials } from "~/types/users";
 import { supabaseClient,supabaseUrl } from "./supabase";
 
 export const uploadProfilePic = async (userId:string,file:File & {preview: string}) =>{
@@ -18,3 +19,31 @@ export const uploadProfilePic = async (userId:string,file:File & {preview: strin
   if (error2) throw new Error(error2.message);
   return updatedUser;
 }
+
+
+
+export const updateCredentials = async (email:string, credentials:TCredentials) => {
+  const {fullName,age,gender} = credentials
+  const { data: updatedUser, error } = await supabaseClient.auth.updateUser({
+    email,
+    data:{
+      fullName,
+      age,
+      gender,
+  }
+  })
+  
+
+  if (error) throw new Error(error.message);
+  return updatedUser;
+};
+
+
+export const updatePassword = async (email:string, newPassword: string) => {
+  const { error } = await supabaseClient.auth.updateUser({
+    email,
+    password:newPassword
+  })
+
+  if (error) throw new Error(error.message);
+};

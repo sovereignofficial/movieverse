@@ -16,11 +16,12 @@ export const Search = () => {
       }}
     >
       <FormContainer.textInput
+        label=""
         name="query"
         placeholder="Search for a movie, person or tv show"
         maxLength={50}
         submitBtn={
-          <FormContainer.submitBtn disabled={false}>
+          <FormContainer.submitBtn className="" disabled={false}>
             <FaSearch />
           </FormContainer.submitBtn>
         }
