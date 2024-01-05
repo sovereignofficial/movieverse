@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getCurrentUser, signIn,signOut,signUp } from "~/services/apiAuth";
 import { getUserFavorites } from "~/services/apiFavorites";
 import { ISignIn, ISignUp } from "~/types/users";
@@ -8,12 +9,15 @@ import { useUsersStore } from "~/zustand/usersStore";
 export const useUsers = () => {
     const {setUserInfo} = useUsersStore();
     const queryCli = useQueryClient();
+    const navigate = useNavigate();
     
-    const {mutate:registerUser, isError:isRegisterError,error:registerError} = useMutation({
+    const {mutate:registerUser, isError:isRegisterError,error:registerError,isSuccess:isRegisterSuccess} = useMutation({
         mutationFn:(newUser:ISignUp)=>signUp(newUser),
         mutationKey:['register'],
         onSuccess:()=>{
             queryCli.invalidateQueries();
+            navigate('/auth/login')
+
         }
     });
 
@@ -72,6 +76,7 @@ export const useUsers = () => {
         registerUser,
         isRegisterError,
         registerError,
+        isRegisterSuccess,
         authSuccess,
         isAuthenticated,
         isAuthError,

@@ -12,6 +12,7 @@ export const Favorites = () => {
   const { pathname } = location;
 
   const headers: { [key: string]: string } = {
+    '/account': 'Favorite Movies',
     '/account/movies': 'Favorite Movies',
     '/account/people': 'Favorite People',
     '/account/tv': 'Favorite TV Shows',
@@ -23,6 +24,7 @@ export const Favorites = () => {
           <h1>{headers[pathname]}</h1>
       </div>
       <div className="page-body-cards">
+         {pathname === '/account' && favoriteMovies && <MovieCards moviesFromTmdb={favoriteMovies}  handleFav={handleFavMovie}/>}
          {pathname === '/account/movies' && favoriteMovies && <MovieCards moviesFromTmdb={favoriteMovies}  handleFav={handleFavMovie}/>}
          {pathname === '/account/people' && favoritePeople && <PeopleCards people={favoritePeople} handleFav={handleFavPerson}/>}
          {pathname === '/account/tv' && favoriteTvShows && <TvCards tv_shows={favoriteTvShows} handleFav={handleFavTvShow}/>}

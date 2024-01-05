@@ -19,7 +19,7 @@ export interface ISignUp{
     email:string,
     password:string,
     age:number,
-    gender:number,
+    gender:string,
     fullName:string
 }
 

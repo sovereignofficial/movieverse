@@ -1,5 +1,6 @@
 import { TCredentials } from "~/types/users";
 import { supabaseClient,supabaseUrl } from "./supabase";
+import { validateAge, validateEmail, validateGender, validateName, validatePassword } from "~/utils/validate";
 
 export const uploadProfilePic = async (userId:string,file:File & {preview: string}) =>{
     const fileName = `profile.${userId}.${file.name}`;
@@ -23,7 +24,12 @@ export const uploadProfilePic = async (userId:string,file:File & {preview: strin
 
 
 export const updateCredentials = async (email:string, credentials:TCredentials) => {
-  const {fullName,age,gender} = credentials
+  const {fullName,age,gender} = credentials;
+  validateName(fullName);
+  validateAge(age.toString());
+  validateGender(`${gender}`);
+  validateEmail(email);
+
   const { data: updatedUser, error } = await supabaseClient.auth.updateUser({
     email,
     data:{
@@ -40,6 +46,9 @@ export const updateCredentials = async (email:string, credentials:TCredentials) 
 
 
 export const updatePassword = async (email:string, newPassword: string) => {
+  validateEmail(email);
+  validatePassword(newPassword);
+  
   const { error } = await supabaseClient.auth.updateUser({
     email,
     password:newPassword

@@ -1,56 +1,84 @@
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUsers } from "~/hooks/useUsers";
-
+import { FormContainer } from "../forms/Form";
+import { validateAge, validateName, validatePassword } from "~/utils/validate";
+import Toast from "../Toast";
 
 export const Register = () => {
   const navigate = useNavigate();
-  const email = useRef("");
-  const fullName = useRef("");
-  const age = useRef(0);
-  const password = useRef("");
-  const gender = useRef(0);
-  const {registerUser} = useUsers();
+  const { registerUser, registerError } = useUsers();
 
-  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const userData = {
-      email:email.current,
-      fullName:fullName.current,
-      password:password.current,
-      age:age.current,
-      gender:gender.current
-    }
-    registerUser(userData);
-  };
-  
   return (
-    <section>
-      <div>
-        <h2>Create an account</h2>
-        <button onClick={()=> navigate(-1)}>Back</button>
-      </div>
-      <form className="text-black" onSubmit={(e) => handleRegister(e)}>
-        <input
-          onChange={(e) => (email.current = e.target.value)}
-          type="email"
-          placeholder="email"
-        />
-        <input
-          onChange={(e) => (fullName.current = e.target.value)}
-          type="text"
-          placeholder="full name"
-        />
-        <input onChange={(e)=> age.current = Number(e.target.value)} type="number" min={0} placeholder="age"/>
-        <input onChange={(e)=> age.current = Number(e.target.value)} type="number" min={0} placeholder="gender"/>
-        <input
-          onChange={(e) => (password.current = e.target.value)}
-          type="password"
-        />
-        <button className="text-white" type="submit">
-          Submit
-        </button>
-      </form>
-    </section>
+    <>
+      {registerError && <Toast message={registerError.message} type="error" />}
+      <section className="page space-y-10">
+        <div className="page-header space-x-5">
+          <button className="btn-secondary" onClick={() => navigate('/auth/login')}>
+            Back
+          </button>
+          <h1>Create an account</h1>
+        </div>
+        <div className="page-body space-y-10 grid place-items-center text-center !w-8/12 mx-auto">
+          <FormContainer
+            onSubmit={(values) => registerUser(values)}
+            initialValues={{
+              fullName: "",
+              gender: "",
+              age: 12,
+              email: "",
+              password: "",
+            }}
+          >
+            <FormContainer.textInput
+              label="Full name"
+              name="fullName"
+              placeholder={"John Doe"}
+              maxLength={60}
+              validate={validateName}
+            />
+            <FormContainer.textInput
+              label="Age"
+              name="age"
+              placeholder={"18"}
+              maxLength={3}
+              validate={validateAge}
+            />
+            <FormContainer.selectInput
+              name="gender"
+              label="Gender"
+              options={[
+                {
+                  value: "0",
+                  label: "Female",
+                },
+                {
+                  value: "1",
+                  label: "Male",
+                },
+              ]}
+            />
+            <FormContainer.emailInput
+              name="email"
+              label="Email address"
+              placeholder="example@example.co"
+              maxLength={100}
+            />
+            <FormContainer.passwordInput
+              label="Password"
+              name="password"
+              placeholder="*******"
+              maxLength={60}
+              validate={validatePassword}
+            />
+            <FormContainer.submitBtn
+              className="btn-primary w-2/12 mx-auto !mt-14 "
+              disabled={false}
+            >
+              Register
+            </FormContainer.submitBtn>
+          </FormContainer>
+        </div>
+      </section>
+    </>
   );
 };

@@ -15,7 +15,6 @@ import { LandingLayout } from "./components/layout/LandingLayout";
 import { PersonDetails } from "./pages/PersonDetails";
 import { TvShowDetails } from "./pages/TvShowDetails";
 import { Settings } from "./pages/Settings";
-import { Activities } from "./pages/Activities";
 
 export const App = () => {
   const routes = useRoutes([
@@ -42,8 +41,8 @@ export const App = () => {
               element: <Account />,
               children: [
                 {
-                  index:true,
-                  element: <Activities />,
+                  index: true,
+                  element: <Favorites />,
                 },
                 {
                   path: "tv",
@@ -58,9 +57,9 @@ export const App = () => {
                   element: <Favorites />,
                 },
                 {
-                  path:'settings',
-                  element:<Settings/>
-                }
+                  path: "settings",
+                  element: <Settings />,
+                },
               ],
             },
             {
@@ -90,6 +89,10 @@ export const App = () => {
           path: "/auth",
           element: <Auth />,
           children: [
+            {
+              index: true,
+              element: <Login />,
+            },
             {
               path: "login",
               element: <Login />,

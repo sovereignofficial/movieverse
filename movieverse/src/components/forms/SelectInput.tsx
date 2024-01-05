@@ -4,10 +4,10 @@ import { SelectInputProps } from "~/types/forms";
 
 const SelectInput: React.FC<SelectInputProps> = ({ name, label, options,defaultValue}) => {
   return (
-    <div className="w-full grid grid-cols-12 items-center">
+    <div className="w-full ">
       <label
         htmlFor={name}
-        className="block text-white text-sm font-medium mb-1 col-span-2"
+        className="block text-white text-sm font-medium mb-1 col-span-2 text-start"
       >
         {label}
       </label>
@@ -15,8 +15,8 @@ const SelectInput: React.FC<SelectInputProps> = ({ name, label, options,defaultV
         as="select"
         id={name}
         name={name}
-        value={defaultValue}
-        className="block col-span-10 w-full py-2 px-3 bg-gray-900 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 text-white sm:text-sm"
+        defaultValue={defaultValue}
+        className="bg-gray-900 rounded ring-1 ring-gray-800 h-10 w-full gap-1 p-1"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

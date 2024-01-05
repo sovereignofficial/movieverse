@@ -4,11 +4,11 @@ import { PasswordInput } from "./PasswordInput";
 import { TextInput } from "./TextInput";
 import { TextArea } from "./TextArea";
 import { NumberInput } from "./NumberInput";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikValues } from "formik";
 import { SubmitBtn } from "./SubmitBtn";
 import SelectInput from "./SelectInput";
 
-export function FormContainer<T>({ children,initialValues,onSubmit,validate }:TFormProps<T>){
+export function FormContainer<T extends FormikValues>({ children,initialValues,onSubmit,validate }:TFormProps<T>){
   return (
     <Formik initialValues={initialValues} validate={validate} onSubmit={onSubmit}>
       {()=>(
@@ -16,7 +16,7 @@ export function FormContainer<T>({ children,initialValues,onSubmit,validate }:TF
       )}
     </Formik>
   );
-};
+}
 
 FormContainer.emailInput = EmailInput;
 FormContainer.passwordInput = PasswordInput;

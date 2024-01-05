@@ -1,30 +1,34 @@
-import { Field } from "formik";
-import { ReactNode } from "react";
+import { ErrorMessage, Field } from "formik";
 
 export const NumberInput: React.FC<{
   label: string;
   name: string;
   placeholder: string;
   maxLength: number;
-  submitBtn?: ReactNode;
-}> = ({ name, label, maxLength, submitBtn, placeholder }) => {
+  validate: (item: number) => string;
+}> = ({ name, label, maxLength, placeholder, validate }) => {
   return (
-    <div className="w-full grid grid-cols-12 items-center">
+    <div className="w-full">
       <label
         htmlFor={name}
-        className="block text-white text-sm font-medium mb-1 col-span-2"
+        className="block text-white text-sm font-medium mb-1 col-span-2 text-start"
       >
         {label}
       </label>
-      <div className="bg-gray-900 rounded-full  h-10 w-full gap-1 p-1 col-span-10">
+      <div className="bg-gray-900 rounded ring-1 ring-gray-800 h-10 w-full gap-1 p-1">
         <Field
-          className="text-center font-medium p-1 bg-transparent w-full h-full outline-none rounded-full col-span-11"
+          className="text-center font-medium p-1 bg-transparent w-full h-full outline-none"
           type={"number"}
           name={name}
           placeholder={placeholder}
           maxLength={maxLength}
+          validate={validate}
         />
-        <div className="col-span-1">{submitBtn}</div>
+        <ErrorMessage
+          name={name}
+          component="div"
+          className="text-red-500 text-sm mt-1"
+        />
       </div>
     </div>
   );

@@ -7,14 +7,19 @@ export default {
         'roboto':['Roboto']
       },
       keyframes: {
-        'fill-heart': {
-          '0%': { transform: 'translateY(100%)' },
-          '50%': { transform: 'translateY(50%)' },
-          '100%': { transform: 'translateY(0)' },
+        'gradient-x': {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center',
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center',
+          },
         },
       },
       animation: {
-        'fill-heart': 'fill-heart 0.3s ease-in-out',
+        'gradient-x': 'gradient-x 3s ease infinite',
       },
       colors:{
         'primary':"#fa3b2d",

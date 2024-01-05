@@ -5,7 +5,6 @@
 * Users can search every movies/tv shows/people by search input at the header and get redirected to the search results page.
 * Users can see most populer movies at the popular movies page.
 * Users can see details of the movie/tv show/person at the detail page.
-* Users can share their comments to a movie/tv show/person
 * Users can manage their favorited movies/tv shows/people in their account page.
 * Users can update their data from the account page and upload a profile page.
 * Users can decorate their account page using pins. The pins also affect their background image.

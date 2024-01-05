@@ -23,7 +23,7 @@ export const Rates: React.FC<{
         }
         <p>{favorites} users favorited.</p>
       </div>
-      {pickBest && isBest && (
+      {pickBest && typeof isBest !== 'undefined' && (
         <button onClick={pickBest}>
           {isBest ? (
             <div className="flex gap-2 items-center">

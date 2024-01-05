@@ -11,6 +11,7 @@ export const isFavorited = <T extends TMovie | TvShow | TPerson>(usersFavorites:
     return usersFavorites?.length > 0 ? usersFavorites.some(fav=> fav.id === item.id) : false
 }
 
+
 export const popularMovieUrl = (page: number, apiKey: string) => `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}&api_key=${apiKey}`;
 export const trendingMovieUrl = (page: number, apiKey: string) => `https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}&api_key=${apiKey}`;
 export const genreBasedMovieSearchUrl = (genreId: number, page: number, apiKey: string) => `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${page}`;

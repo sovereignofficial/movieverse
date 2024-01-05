@@ -28,10 +28,13 @@
 
 @layer components{
     .btn-primary{
-        @apply bg-primary font-bold px-4 py-1 rounded-full
+        @apply animation-slow text-sm hover:bg-red-600 bg-red-700 border-red-500 border font-bold px-4 py-1 rounded-md disabled:animate-gradient-x disabled:bg-gradient-to-r from-red-900 to-red-500
     }
     .btn-secondary{
-        @apply px-4 py-1 animation-slow text-zinc-500 border-zinc-500 hover:border-red-500 border rounded hover:text-red-500
+        @apply btn-primary border-zinc-500 hover:border-red-500 border rounded hover:text-red-500 bg-zinc-800 hover:bg-zinc-800
+    }
+    .btn-premium{
+        @apply btn-primary border-yellow-500 border rounded  bg-yellow-700 hover:bg-yellow-600;
     }
     .btn-carousel{
         @apply border border-zinc-500 w-32 py-1 rounded-full font-bold z-30

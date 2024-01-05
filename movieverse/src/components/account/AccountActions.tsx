@@ -12,7 +12,7 @@ export const AccountActions = () => {
     
     return (
         <div className="flex gap-1 items-center">
-            <button className="btn-primary !rounded !bg-blue-500" onClick={()=>navigate('/pricing')}>Buy premium</button>
+            <button className="btn-premium" onClick={()=>navigate('/pricing')}>Buy premium</button>
             <button className="btn-primary" onClick={()=>handleLogOut()}>Log out</button>
         </div>
     );

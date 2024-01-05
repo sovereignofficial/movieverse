@@ -9,7 +9,7 @@ type ValuesType<T> = Record<keyof DynamicInitialValues<T>, any>;
 export type SelectInputProps = {
     name: string;
     label: string;
-    defaultValue:string;
+    defaultValue?:string;
     options: { value: string; label: string}[];
   }
 
