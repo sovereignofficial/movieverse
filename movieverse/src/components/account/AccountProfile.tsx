@@ -7,8 +7,7 @@ export const AccountProfile:React.FC<{fullName:string}> = ({fullName}) => {
     <div className="flex-1 flex items-center gap-4">
       <ProfileImage src={profileUrl}/>
       <h2 className="flex items-center gap-4">
-        {fullName ?? "Admin"}
-        <span className="text-sm font-light italic mt-3">( Not Premium )</span>
+        {fullName ?? "Unknown"}
       </h2>
     </div>
   );

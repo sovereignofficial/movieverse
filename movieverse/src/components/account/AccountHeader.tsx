@@ -12,7 +12,7 @@ export const AccountHeader:React.FC<{bests:TMovie[] | TMovieDetail[]}> = ({bests
         <AccountBackground bests={bests}/>
       </div>
       <div className="flex items-center absolute w-full bottom-0 left-0">
-        <AccountProfile fullName={fullName ?? "Admin"}/>
+        <AccountProfile fullName={fullName ?? "Unknown"}/>
         <AccountActions/>
       </div>
     </header>

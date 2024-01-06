@@ -19,7 +19,7 @@ export const UserInfoList = () => {
         </li>
         <li className="grid grid-cols-2">
           <p className="font-medium">Age</p>
-          <p>{age} years old</p>
+          <p>{age ?? "?"} years old</p>
         </li>
         <li className="grid grid-cols-2">
           <p className="font-medium">Gender </p>

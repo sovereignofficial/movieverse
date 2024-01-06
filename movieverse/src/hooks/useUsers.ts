@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser, signIn,signOut,signUp } from "~/services/apiAuth";
+import { getCurrentUser, loginWithGoogle, signIn,signOut,signUp } from "~/services/apiAuth";
 import { getUserFavorites } from "~/services/apiFavorites";
 import { ISignIn, ISignUp } from "~/types/users";
 import { useUsersStore } from "~/zustand/usersStore";
@@ -32,6 +32,17 @@ export const useUsers = () => {
         }
     });
 
+    const {mutate:loginUserWithGoogle} = useMutation({
+        mutationFn:loginWithGoogle,
+        mutationKey:['oauth-google'],
+        onSuccess:(res)=>{
+            console.log(res);
+        },
+        onError:(err)=>{
+            console.error(err);
+        }
+    })
+
     const {mutate:logOutUser, isError:isLogOutError,error:logOutError} = useMutation({
         mutationFn:()=>signOut(),
         mutationKey:['logout'],
@@ -54,26 +65,38 @@ export const useUsers = () => {
         onError:(err)=>{console.log(err)}
     })
 
-    const {data:currUser, isError:isAuthError,error:authError, isPending:isAuthenticating, isSuccess:authSuccess} = useQuery({
+    const {data:session, isError:isAuthError,error:authError, isPending:isAuthenticating, isSuccess:authSuccess} = useQuery({
         queryFn:getCurrentUser,
         queryKey:['authenticate'],
     });
 
     
     useEffect(() => {
-        if (authSuccess && !isAuthError && currUser) {  
-            const userData = currUser.user_metadata;
-            const email = currUser.email
-            const id = currUser.id;
-            setUserInfo({userId:id,fullName:userData.fullName, email:email, gender:Number(userData.gender), age:userData.age,profileUrl:userData.profile});
-            getUserFavoritesFn(currUser.id);
-        }``
-    }, [authSuccess, isAuthError, currUser, setUserInfo,getUserFavoritesFn]);
+        if (authSuccess && !isAuthError && session && session.user) {  
+            const email = session.user.email
+            const id = session.user.id;
+            const appData = session.user.app_metadata;
+            const userData = session.user.user_metadata;
+
+            if(appData.provider === 'google' && !(userData.fullName || userData.profileUrl || userData.age)){
+                const identity = session.user.identities;
+                if(identity){
+                    const IDData = identity[0].identity_data;
+                    setUserInfo({userId:id,fullName:IDData?.full_name,email,profileUrl:IDData?.picture});
+                }
+            }else{
+                setUserInfo({userId:id,fullName:userData.fullName, email:email, gender:Number(userData.gender), age:userData.age,profileUrl:userData.profile});
+            }
+            
+            getUserFavoritesFn(session.user.id);
+        }
+    }, [authSuccess, isAuthError, session, setUserInfo,getUserFavoritesFn]);
     
-  const isAuthenticated = currUser && currUser.role === "authenticated" ? true :false;
+  const isAuthenticated = session && session.user.role === "authenticated" ? true :false;
 
     return {
         registerUser,
+        loginUserWithGoogle,
         isRegisterError,
         registerError,
         isRegisterSuccess,
@@ -82,7 +105,7 @@ export const useUsers = () => {
         isAuthError,
         authError,
         isAuthenticating,
-        currUser,
+        user:session?.user,
         loginUser,
         isLoginError,
         loginError,

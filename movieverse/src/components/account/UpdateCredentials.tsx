@@ -45,7 +45,7 @@ export const UpdateCredentials = () => {
       <FormContainer.textInput
         label="Age"
         name="age"
-        placeholder={age.toString()}
+        placeholder={age?.toString()}
         maxLength={3}
         validate={validateAge}
       />
