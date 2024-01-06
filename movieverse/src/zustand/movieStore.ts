@@ -18,7 +18,7 @@ export const useMovieStore = create<TMovieStore>((set)=>({
     page:MIN_PAGE,
     moviesFromTmdb:[],
     currentFilter:"popular",
-    setMovies:(newMovies)=>set((state)=>({moviesFromTmdb:[...state.moviesFromTmdb,...newMovies]})),
+    setMovies:(newMovies)=>set(()=>({moviesFromTmdb:newMovies})),
     resetMovies:()=>set(()=>({moviesFromTmdb:[]})),
     setFilter:(filter)=>set(()=>({currentFilter:filter})),
     incrementPage:() => set((state)=>({page:state.page + 1})),
