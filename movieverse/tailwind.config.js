@@ -27,9 +27,9 @@ export default {
     },
     screens:{
       'sm':'0px',
-      'md':'768px',
-      'lg':'1024px',
-      'xl':'1650px',
+      'md':'760px',
+      'lg':'1650px',
+      'xl':'1920px',
     },
   },
   plugins: [],

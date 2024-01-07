@@ -1,14 +1,21 @@
+import { HeaderAvatar } from "./components/header/HeaderAvatar"
+import { RiCompassDiscoverLine } from "react-icons/ri";
+import { RiMovie2Line } from "react-icons/ri";
+
 const appRoutes = [
     {
-        name: 'Movies',
+        name:'Movies',
+        icon: RiMovie2Line,
         url: '/movies',
     },
     {
-        name: 'For You',
-        url: '/feed',
+        name:'Discover',
+        icon: RiCompassDiscoverLine,
+        url: '/discover',
     },
     {
-        name: 'Account',
+        name:'Account',
+        avatar: HeaderAvatar,
         url: '/account',
     },
 

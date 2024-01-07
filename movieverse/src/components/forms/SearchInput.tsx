@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FormContainer } from "./Form";
 
-export const Search = () => {
+export const Search:React.FC<{onSearch?:()=>void}> = ({onSearch}) => {
   const navigate = useNavigate();
 
   return (
@@ -12,6 +12,7 @@ export const Search = () => {
       }}
       onSubmit={(values) =>{
         const query = values.query;
+        onSearch && onSearch();
         if(query.toString().trim())navigate(`/search?q=${values.query}`)
       }}
     >

@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Movies } from "./pages/Movies";
-import { Feed } from "./pages/Feed";
+import { Discover } from "./pages/Discover";
 import { Search } from "./pages/Search";
 import { Account } from "./pages/Account";
 import { Auth } from "./pages/Auth";
@@ -15,6 +15,7 @@ import { LandingLayout } from "./components/layout/LandingLayout";
 import { PersonDetails } from "./pages/PersonDetails";
 import { TvShowDetails } from "./pages/TvShowDetails";
 import { Settings } from "./pages/Settings";
+import { PageNotFound } from "./pages/PageNotFound";
 
 export const App = () => {
   const routes = useRoutes([
@@ -29,8 +30,8 @@ export const App = () => {
               element: <Movies />,
             },
             {
-              path: "/feed",
-              element: <Feed />,
+              path: "/discover",
+              element: <Discover />,
             },
             {
               path: "/search",
@@ -105,6 +106,10 @@ export const App = () => {
         },
       ],
     },
+    {
+      path:'*',
+      element:<PageNotFound/>
+    }
   ]);
 
   return routes;

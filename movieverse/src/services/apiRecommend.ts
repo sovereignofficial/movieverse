@@ -7,10 +7,11 @@ export const getSpecialMoviesForUser = async (favMovies: TMovie[]) => {
     const genremap = getUserGenreMap(favMovies);
     const movies = userSpecialMovieDistribution(genremap);
     const specialForUser: TMovie[] = []
-    console.log(genremap, movies, "genre map and movies")
+
 
     for (let i = 0; specialForUser.length < 10; i++) {
-        const { results }: { results: TMovie[] } = await fetch(genreBasedMovieSearchUrl(movies[i].genre, 1, apiKey)).then(res => res.json())
+        const randomPage = Math.floor(Math.random() * 10);
+        const { results }: { results: TMovie[] } = await fetch(genreBasedMovieSearchUrl(movies[i].genre, randomPage, apiKey)).then(res => res.json())
         for (let z = 0; z < movies[i].amount; z++) {
             const randomAmount = Math.floor(Math.random() * 10);
             if (specialForUser.some(item => item.title === results[z + randomAmount].title)) {
@@ -28,10 +29,12 @@ export const getMoviesFromTop3Genres = async (favMovies: TMovie[]) => {
     const results = [];
 
     for (let i = 0; i < 3; i++) {
-        const { results: topMovies }: { results: TMovie[] } = await fetch(genreBasedMovieSearchUrl(topGenresOfUser[i].genre, 1, apiKey)).then(res => res.json());
+        const randomPage = Math.floor(Math.random() * 10);
+        const { results: topMovies }: { results: TMovie[] } = await fetch(genreBasedMovieSearchUrl(topGenresOfUser[i].genre, randomPage, apiKey)).then(res => res.json());
+        const limitedTopMovies = topMovies.slice(0, 10); // Limit to the first 10 movies
         results.push({
             genreName: genres.find(genre => genre.id === topGenresOfUser[i].genre)?.name,
-            movies: topMovies
+            movies: limitedTopMovies
         })
     }
 
@@ -57,7 +60,7 @@ export const getMostlyLikedMoviesFromMovieverse = async () => {
     const sortedMovieIds = Object.keys(movieCounts).sort((a, b) => movieCounts[Number(b)] - movieCounts[Number(a)]);
 
     const sortedMovies = [];
-    for (const movieId of sortedMovieIds) {
+    for (const movieId of sortedMovieIds.slice(0, 10)) { // Only fetch the first 10 movies
         const { data: movie, error: movieError } = await supabaseClient
             .from('movies')
             .select('*')

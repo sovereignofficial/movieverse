@@ -18,7 +18,7 @@
 * Tv Show Details => /tv?t=:tvId
 * Person Details => /person?p=:personId
 * Search => /search?q=:searchQuery
-* Special Feed For User => /feed
+* Discover => /discover
 * Account => /account
 * Favorite Tv Shows => /account/tv
 * Favorite People => /account/people

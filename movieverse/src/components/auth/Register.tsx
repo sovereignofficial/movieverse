@@ -71,7 +71,7 @@ export const Register = () => {
               validate={validatePassword}
             />
             <FormContainer.submitBtn
-              className="btn-primary w-2/12 mx-auto !mt-14 "
+              className="btn-primary mx-auto !mt-14 "
               disabled={false}
             >
               Register

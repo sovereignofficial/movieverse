@@ -8,7 +8,7 @@ export const useBests = ()=>{
     const [isBest, setIsBest] = useState(false);
     const {userId,setUserInfo,bests} = useUsersStore();
 
-    const {mutate:pickBestFn} = useMutation({
+    const {mutate:pickBestFn,isSuccess:bestSuccess, error:bestError} = useMutation({
         mutationFn:async({item,userId}:{item:TMovie | TMovieDetail,userId:string})=>{
             const data = await pickBest(item,userId);
             setIsBest(true);
@@ -31,7 +31,7 @@ export const useBests = ()=>{
         }
     });
 
-    const {mutate:removeFromBestsFn} = useMutation({
+    const {mutate:removeFromBestsFn,isSuccess:unbestSuccess,error:unbestError} = useMutation({
         mutationFn:async({userId,itemId}:{userId:string,itemId:number})=>{
             const data = await removeFromBests(userId,itemId);
             setIsBest(false);
@@ -52,5 +52,5 @@ export const useBests = ()=>{
         }
     },[getBestsFn,userId])
 
-    return {pickBestFn,bests,removeFromBestsFn,isBest,setIsBest}
+    return {pickBestFn,bests,removeFromBestsFn,isBest,setIsBest,bestSuccess,bestError,unbestError,unbestSuccess}
 }
