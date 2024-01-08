@@ -26,12 +26,12 @@ export const MobileMenu = () => {
       >
         <div className="page">
           <div className="page-header">
-            <button onClick={toggleMenu} className="p-2 flex-1">
+            <div className="sm:block md:hidden flex-1">
+              <LogoMobile onClick={toggleMenu} />
+            </div>
+            <button onClick={toggleMenu} className="p-2 ">
               <BiMenu size={24} />
             </button>
-            <div className="sm:block md:hidden">
-              <LogoMobile />
-            </div>
           </div>
           <div className="page-body space-y-10 ">
             <section className="grid place-items-center">
