@@ -26,7 +26,7 @@ export const MediaDetail: React.FC<MediaDetailProps<TMovie | TvShow>> = ({
   isBest,
 }) => {
   return (
-    <div className="grid grid-cols-12 gap-2 page-body ">
+    <div className="md:grid grid-cols-12 gap-2 page-body ">
       <div className="col-span-3">
         <DetailImage {...detailImage} />
       </div>

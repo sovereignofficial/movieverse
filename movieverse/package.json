@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.2",
-    "@tanstack/react-query": "^5.17.5",
+    "@tanstack/react-query": "^5.17.9",
     "autoprefixer": "^10.4.16",
     "formik": "^2.4.5",
     "framer-motion": "^10.17.9",
@@ -27,11 +27,11 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "@types/node": "^20.10.6",
-    "@types/react": "^18.2.46",
+    "@types/node": "^20.10.7",
+    "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
-    "@typescript-eslint/eslint-plugin": "^6.17.0",
-    "@typescript-eslint/parser": "^6.17.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
     "@vitejs/plugin-react": "latest",
     "eslint": "^8.56.0",
     "eslint-plugin-react-hooks": "^4.6.0",

@@ -18,7 +18,7 @@ export const Register = () => {
           </button>
           <h1>Create an account</h1>
         </div>
-        <div className="page-body space-y-10 grid place-items-center text-center !w-8/12 mx-auto">
+        <div className="page-body grid place-items-center text-center !lg:w-8/12 mx-auto space-y-6">
           <FormContainer
             onSubmit={(values) => registerUser(values)}
             initialValues={{

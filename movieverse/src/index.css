@@ -52,7 +52,7 @@
     }
 
     .page-body {
-        @apply sm:w-full md:w-10/12 mx-auto p-5
+        @apply sm:w-full md:w-10/12 mx-auto sm:p-1 md:p-5
     }
 
     .page-body-cards {

@@ -14,7 +14,7 @@ export const Favorites = () => {
   return (
     <div className="page">
 
-      <div className="page-body">
+      <div className="page-body-cards">
         {pathname === "/account" &&
           favoriteMovies &&
           (favoriteMovies.length > 0 ? (

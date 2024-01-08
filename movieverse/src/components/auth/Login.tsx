@@ -15,7 +15,7 @@ export const Login = () => {
         <div className="page-header">
           <h1>Log in to your account</h1>
         </div>
-        <div className="page-body  grid place-items-center text-center !w-8/12 mx-auto space-y-6">
+        <div className="page-body grid place-items-center text-center !lg:w-8/12 mx-auto space-y-6">
           <FormContainer
             onSubmit={(values) => loginUser(values)}
             initialValues={{
@@ -49,9 +49,9 @@ export const Login = () => {
 
 
           <div className="bg-zinc-800 h-[1px] w-10/12 "></div>
-          <button onClick={() => loginUserWithGoogle()} className="btn-primary !bg-white !border-zinc-500 grid grid-cols-8 place-items-center">
+          <button onClick={() => loginUserWithGoogle()} className="btn-primary !bg-white !border-zinc-500 grid grid-cols-6 place-items-center">
             <FcGoogle size={30} />
-            <span className="text-gray-700 col-span-7 text-lg">
+            <span className="text-gray-700 col-span-5 text-sm lg:text-lg">
               Login with Google
             </span>
           </button>

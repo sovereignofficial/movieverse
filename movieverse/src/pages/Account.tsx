@@ -11,7 +11,7 @@ export const Account = () => {
         <div className="page-header">
           <AccountHeader bests={bests!} />
         </div>
-        <div className="w-full grid grid-cols-12">
+        <div className="page-body md:grid md:grid-cols-12 space-y-10 ">
           <AccountSidePanel bests={bests!} />
           <AccountPanel />
         </div>
