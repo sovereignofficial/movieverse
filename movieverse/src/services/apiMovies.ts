@@ -4,6 +4,21 @@ import { apiKey, genreBasedMovieSearchUrl, options, popularMovieUrl, trendingMov
 import { TvShow } from "~/types/tvshow";
 import { TPerson } from "~/types/people";
 
+
+
+export const getMoviesForInfiniteScroll = async (currentFilter: string | number, page: number) => {
+    switch (true) {
+        case currentFilter === "popular":
+            return await getPopularMovies(page);
+        case currentFilter === "trending":
+            return await getTrendMovies(page);
+        case typeof currentFilter === "number":
+            return await getGenreMovies(currentFilter, page);
+        default:
+            return await getPopularMovies(page);
+    }
+}
+
 export const getPopularMovies = async (page: number) => {
     console.log(`Fetching the page:${page}`);
 

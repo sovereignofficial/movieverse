@@ -5,23 +5,23 @@ import { useMovieStore } from "~/zustand/movieStore";
 
 export const useMovies = () => {
     const [fPrev, setFPrev] = useState<string | number>('');
-    const { currentFilter, setMovies, moviesFromTmdb, page } = useMovieStore();
+    const { currentFilter, setMovies, moviesFromTmdb } = useMovieStore();
 
     const qcli = useQueryClient();
 
     const { data: popular, isSuccess: popularSuccess } = useQuery({
-        queryKey: ['popular', page],
-        queryFn: () => getPopularMovies(page),
+        queryKey: ['popular',1],
+        queryFn: () => getPopularMovies(1),
     });
 
     const { data: trend, isSuccess: trendSuccess } = useQuery({
-        queryKey: ['trends', page],
-        queryFn: () => getTrendMovies(page),
+        queryKey: ['trends',1],
+        queryFn: () => getTrendMovies(1),
     });
 
     const { data: genre, isSuccess: genreSuccess } = useQuery({
-        queryKey: ['genre', currentFilter, page],
-        queryFn: () => getGenreMovies(currentFilter as number, page),
+        queryKey: ['genre', currentFilter,1],
+        queryFn: () => getGenreMovies(currentFilter as number,1),
     });
 
      // Set movies when trendSuccess changes
