@@ -27,6 +27,28 @@
 }
 
 @layer components {
+    .aurora-bg {
+
+        background-color: rgb(0, 0, 0);
+        background-image: radial-gradient(at 0% 66%, rgb(79, 70, 229) 0, transparent 41%), radial-gradient(at 26% 93%, rgb(185, 28, 28) 0, transparent 48%), radial-gradient(at 46% 80%, rgb(129, 140, 248) 0, transparent 15%);
+
+    }
+
+    .aurora-bg-extra {
+
+        background-color: rgb(0, 0, 0);
+        background-image: radial-gradient(at 100% 100%, rgb(79, 70, 229) 0, transparent 41%), radial-gradient(at 75% 75%, rgb(185, 28, 28) 0, transparent 48%), radial-gradient(at 75% 60%, rgb(129, 140, 248) 0, transparent 18%);
+
+    }
+
+    .aurora-bg-cta {
+
+        background-color: rgb(0, 0, 0);
+        background-image: radial-gradient(at 37% 56%, rgb(127, 29, 29) 0, transparent 12%), radial-gradient(at 35% 60%, rgb(129, 140, 248) 0, transparent 1%), radial-gradient(at 39% 55%, rgb(129, 140, 248) 0, transparent 9%), radial-gradient(at 49% 44%, rgb(190, 18, 60) 0, transparent 54%), radial-gradient(at 65% 34%, rgb(153, 27, 27) 0, transparent 36%), radial-gradient(at 97% 19%, rgb(127, 29, 29) 0, transparent 37%);
+
+    }
+
+
     .btn-primary {
         @apply animation-slow sm:text-xs lg:text-sm hover:bg-red-600 bg-red-700 border-red-500 border font-bold sm:px-3 lg:px-4 py-1 rounded-md disabled:animate-gradient-x disabled:bg-gradient-to-r from-red-900 to-red-500
     }
@@ -103,3 +125,4 @@ img {
     -webkit-user-select: none;
     user-select: none;
 }
+

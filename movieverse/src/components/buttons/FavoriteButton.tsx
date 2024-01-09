@@ -7,7 +7,7 @@ export const FavoriteButton: React.FC<{
   isFavorited: boolean;
 }> = memo(({ onClick, disabled, isFavorited }) => {
   return (
-    <button disabled={disabled} onClick={onClick}>
+    <button name="favorite" disabled={disabled} onClick={onClick}>
       {isFavorited ? (
         <IoHeart style={{ color: "red" }} size={20} />
       ) : (

@@ -16,6 +16,8 @@ import { PersonDetails } from "./pages/PersonDetails";
 import { TvShowDetails } from "./pages/TvShowDetails";
 import { Settings } from "./pages/Settings";
 import { PageNotFound } from "./pages/PageNotFound";
+import { Pricing } from "./pages/Pricing";
+import { About } from "./pages/About";
 
 export const App = () => {
   const routes = useRoutes([
@@ -87,29 +89,37 @@ export const App = () => {
           element: <Home />,
         },
         {
-          path: "/auth",
-          element: <Auth />,
-          children: [
-            {
-              index: true,
-              element: <Login />,
-            },
-            {
-              path: "login",
-              element: <Login />,
-            },
-            {
-              path: "register",
-              element: <Register />,
-            },
-          ],
+          path: "/pricing",
+          element: <Pricing />,
+        },
+        {
+          path: "/about",
+          element: <About />,
         },
       ],
     },
     {
-      path:'*',
-      element:<PageNotFound/>
-    }
+      path: "/auth",
+      element: <Auth />,
+      children: [
+        {
+          index: true,
+          element: <Login />,
+        },
+        {
+          path: "login",
+          element: <Login />,
+        },
+        {
+          path: "register",
+          element: <Register />,
+        },
+      ],
+    },
+    {
+      path: "*",
+      element: <PageNotFound />,
+    },
   ]);
 
   return routes;

@@ -4,7 +4,6 @@ import { validateAge, validateEmail, validateGender, validateName, validatePassw
 
 export const uploadProfilePic = async (userId:string,file:File & {preview: string}) =>{
     const fileName = `profile.${userId}.${file.name}`;
-    console.log(file);
     const { error: storageError } = await supabaseClient.storage
     .from("profiles")
     .upload(fileName, file);

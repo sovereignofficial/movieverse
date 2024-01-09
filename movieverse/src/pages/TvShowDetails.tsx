@@ -7,7 +7,6 @@ import { useTVShow } from "~/hooks/useTvShow";
 export const TvShowDetails = () => {
     const navigate = useNavigate();
     const {tvshow,trailer} = useTVShow();
-    console.log(trailer)
   return (
     <div className="page space-y-5">
         <div className="page-header">

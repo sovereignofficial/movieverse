@@ -20,7 +20,7 @@ async function signUp({ email, password, age, gender, fullName }: ISignUp) {
     validateName(fullName);
     validatePassword(password);
 
-    const { data, error } = await supabaseClient.auth.signUp({
+    const { error } = await supabaseClient.auth.signUp({
         email,
         password,
         options: {
@@ -35,7 +35,7 @@ async function signUp({ email, password, age, gender, fullName }: ISignUp) {
     if (error) {
         throw new Error(error.message);
     } else {
-        console.log('User signed up:', data);
+        console.log('User signed up');
     }
 }
 
@@ -44,7 +44,7 @@ async function signIn({ email, password }: ISignIn) {
     validateEmail(email);
     validatePassword(password);
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
+    const { error } = await supabaseClient.auth.signInWithPassword({
         email,
         password,
     });
@@ -52,7 +52,7 @@ async function signIn({ email, password }: ISignIn) {
     if (error) {
         throw new Error(error.message);
     } else {
-        console.log('User signed in:', data);
+        console.log('User signed in');
     }
 }
 

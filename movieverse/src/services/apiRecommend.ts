@@ -103,7 +103,6 @@ export const getUserGenreMap = (favMovies: TMovie[]) => {
 }
 
 export const userSpecialMovieDistribution = (genreMap: { genre: number, occurence: number, percentage: number }[]) => {
-    console.log(genreMap);
     const moviesFrom = genreMap.map((item) => {
         const calculatedAmount = (item.percentage * SPECIAL_MOVIE_AMOUNT) / 100;
         return { genre: item.genre, amount: Math.round(calculatedAmount) }

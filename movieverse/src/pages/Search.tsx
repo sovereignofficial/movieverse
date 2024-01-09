@@ -1,5 +1,6 @@
 import { DataNotFound } from "~/components/DataNotFound";
 import { SearchResultSection } from "~/components/SearchResultSection";
+import { StaggerContainer } from "~/components/StaggerContainer";
 import { MovieCards } from "~/components/cards/MovieCards";
 import { PeopleCards } from "~/components/cards/PeopleCards";
 import { TvCards } from "~/components/cards/TvCards";
@@ -16,7 +17,7 @@ export const Search = () => {
       <div className="page-header">
         <h1>Results for "{query}"</h1>
       </div>
-      <div className="page-body space-y-20">
+      <StaggerContainer className="page-body lg:col-span-11 ">
         {movieResults && movieResults?.length > 0 ? (
           <SearchResultSection header="Movies">
             <MovieCards
@@ -47,7 +48,8 @@ export const Search = () => {
             message={`Any person couldn't found with this keyword:${query}`}
           />
         )}
-      </div>
+      </StaggerContainer>
+
     </div>
   );
 };

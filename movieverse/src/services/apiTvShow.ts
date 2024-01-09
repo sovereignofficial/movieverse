@@ -7,7 +7,6 @@ export const getTVShow = async (tvShowId: string) => {
         .then(res => res.json())
         .catch(err => console.error(err));
 
-    console.log(data);
 
     return data as TvShow;
 }

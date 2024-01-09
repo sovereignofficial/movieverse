@@ -6,7 +6,6 @@ import { usePerson } from "~/hooks/usePerson";
 export const PersonDetails = () => {
     const navigate = useNavigate();
     const {person} = usePerson();
-    console.log(person);
 
   return (
     <div className="page">

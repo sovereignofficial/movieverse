@@ -25,7 +25,6 @@ export const searchForTvShows = async (query:string) =>{
     .then(res=>res.json())
     .catch(err=>console.error(err))
 
-    console.log(results);
 
     return results as TvShow[]
 }

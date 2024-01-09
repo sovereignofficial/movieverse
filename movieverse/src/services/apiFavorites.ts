@@ -116,7 +116,6 @@ export const favTvShow = async (tvshow: TvShow, userId: string) => {
 };
 
 export const favPerson = async (person: TPerson, userId: string) => {
-  console.log(person);
   const filteredKnownFor = person.known_for?.map(item=> item?.id)
 
   await findInDb({...person,known_for:filteredKnownFor}, "people")

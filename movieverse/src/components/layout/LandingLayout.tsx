@@ -14,9 +14,8 @@ export const LandingLayout = () => {
   },[isAuthenticated,navigate])
 
   return (
-    <div>
+    <div id="landing-layout">
       <LandingHeader />
-      LandingLayout
       <Outlet/>
     </div>
   );

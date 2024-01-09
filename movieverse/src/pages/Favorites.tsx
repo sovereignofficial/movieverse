@@ -5,6 +5,7 @@ import { useFavorite } from "~/hooks/useFavorite";
 import { useUsersStore } from "~/zustand/usersStore";
 import { useLocation } from "react-router-dom";
 import { DataNotFound } from "~/components/DataNotFound";
+import { StaggerContainer } from "~/components/StaggerContainer";
 export const Favorites = () => {
   const { handleFavMovie, handleFavPerson, handleFavTvShow } = useFavorite();
   const { favoriteMovies, favoritePeople, favoriteTvShows } = useUsersStore();
@@ -13,8 +14,7 @@ export const Favorites = () => {
 
   return (
     <div className="page">
-
-      <div className="page-body-cards">
+      <StaggerContainer className="page-body-cards lg:col-span-11 !grid-cols-2">
         {pathname === "/account" &&
           favoriteMovies &&
           (favoriteMovies.length > 0 ? (
@@ -23,7 +23,7 @@ export const Favorites = () => {
               handleFav={handleFavMovie}
             />
           ) : (
-             <DataNotFound message=" User haven't favorited any movie yet."/>
+            <DataNotFound message=" User haven't favorited any movie yet." />
           ))}
         {pathname === "/account/movies" &&
           favoriteMovies &&
@@ -33,23 +33,23 @@ export const Favorites = () => {
               handleFav={handleFavMovie}
             />
           ) : (
-             <DataNotFound message=" User haven't favorited any movie yet."/>
+            <DataNotFound message=" User haven't favorited any movie yet." />
           ))}
         {pathname === "/account/people" &&
           favoritePeople &&
           (favoritePeople.length > 0 ? (
             <PeopleCards people={favoritePeople} handleFav={handleFavPerson} />
           ) : (
-            <DataNotFound message="User haven't favorited any person yet."/>
+            <DataNotFound message="User haven't favorited any person yet." />
           ))}
         {pathname === "/account/tv" &&
           favoriteTvShows &&
           (favoriteTvShows.length > 0 ? (
             <TvCards tv_shows={favoriteTvShows} handleFav={handleFavTvShow} />
           ) : (
-            <DataNotFound message="User haven't favorited any tv show yet."/>
+            <DataNotFound message="User haven't favorited any tv show yet." />
           ))}
-      </div>
+      </StaggerContainer>
     </div>
   );
 };

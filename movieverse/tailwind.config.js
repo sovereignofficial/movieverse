@@ -1,10 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['index.html','./src/**/*.{tsx,ts,jsx,js}'],
+  content: ['index.html', './src/**/*.{tsx,ts,jsx,js}'],
   theme: {
     extend: {
-      fontFamily:{
-        'roboto':['Roboto']
+      backgroundImage: {
+        'mostlyliked': "url('/landing/mostlyliked.png')",
+      },
+      fontFamily: {
+        'roboto': ['Roboto']
       },
       keyframes: {
         'gradient-x': {
@@ -21,15 +24,15 @@ export default {
       animation: {
         'gradient-x': 'gradient-x 3s ease infinite',
       },
-      colors:{
-        'primary':"#fa3b2d",
+      colors: {
+        'primary': "#fa3b2d",
       }
     },
-    screens:{
-      'sm':'0px',
-      'md':'760px',
-      'lg':'1650px',
-      'xl':'1920px',
+    screens: {
+      'sm': '0px',
+      'md': '760px',
+      'lg': '1350px',
+      'xl': '1650px',
     },
   },
   plugins: [],

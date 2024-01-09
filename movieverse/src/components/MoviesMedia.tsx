@@ -7,6 +7,7 @@ import { useScrollPosition } from "~/hooks/useScrollPosition";
 import { useInfiniteScrollForMovies } from "~/hooks/useInfiniteScrollForMovies";
 import { useEffect } from "react";
 import { Spinner } from './Spinner'
+import { StaggerContainer } from "./StaggerContainer";
 
 export const MoviesMedia: React.FC = () => {
   const { moviesFromTmdb, currentFilter } = useMovies();
@@ -19,7 +20,7 @@ export const MoviesMedia: React.FC = () => {
     if (isBottom) {
       fetchNextPage();
     }
-  }, [isBottom])
+  }, [isBottom,fetchNextPage])
 
   return (
     <div className="space-y-5 lg:grid lg:grid-cols-12">
@@ -28,14 +29,13 @@ export const MoviesMedia: React.FC = () => {
       </div>
 
       {moviesFromTmdb.length > 0 ? (
-        <div className="page-body-cards lg:col-span-11">
-
+        <StaggerContainer className="page-body-cards lg:col-span-11 ">
           <MovieCards
             moviesFromTmdb={moviesFromTmdb}
             handleFav={handleFavMovie}
           />
           {isFetchingNextPage && <Spinner />}
-        </div>
+        </StaggerContainer>
       ) : (
         <div className="w-screen">
           <DataNotFound message="Movies couldn't loaded." />

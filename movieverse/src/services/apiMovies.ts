@@ -20,7 +20,6 @@ export const getMoviesForInfiniteScroll = async (currentFilter: string | number,
 }
 
 export const getPopularMovies = async (page: number) => {
-    console.log(`Fetching the page:${page}`);
 
     const data = await fetch(popularMovieUrl(page, apiKey), options)
         .then(res => res.json())
@@ -61,7 +60,6 @@ export const getMovie = async (movieId: string) => {
         .then(res => res.json())
         .catch(err => console.error(err));
 
-    console.log(data);
 
     return data;
 }

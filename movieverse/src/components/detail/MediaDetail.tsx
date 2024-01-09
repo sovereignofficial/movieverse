@@ -3,6 +3,8 @@ import { Rates } from "./Rates";
 import { TvShow } from "~/types/tvshow";
 import { DetailImage } from "../images/DetailImage";
 import { TPerson } from "~/types/people";
+import { StaggerContainer } from "../StaggerContainer";
+import { motion } from "framer-motion";
 
 interface MediaDetailProps<T extends TMovie | TvShow | TPerson> {
   media: T;
@@ -25,12 +27,19 @@ export const MediaDetail: React.FC<MediaDetailProps<TMovie | TvShow>> = ({
   pickBest,
   isBest,
 }) => {
+  const childVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.5 } },
+  };
   return (
-    <div className="md:grid grid-cols-12 gap-2 page-body ">
-      <div className="col-span-3">
+    <StaggerContainer className="md:grid grid-cols-12 gap-2 page-body ">
+      <motion.div className="col-span-3" variants={childVariants}>
         <DetailImage {...detailImage} />
-      </div>
-      <div className="col-span-9 space-y-3 p-5 h-full w-full bg-gray-900 rounded-xl flex flex-col justify-between">
+      </motion.div>
+      <motion.div
+        className="col-span-9 space-y-3 p-5 h-full w-full bg-gray-900 rounded-xl flex flex-col justify-between"
+        variants={childVariants}
+      >
         <h2>Overview</h2>
         {renderInfo()}
         <Rates
@@ -41,7 +50,7 @@ export const MediaDetail: React.FC<MediaDetailProps<TMovie | TvShow>> = ({
           pickBest={pickBest}
           isBest={isBest}
         />
-      </div>
-    </div>
+      </motion.div>
+    </StaggerContainer>
   );
 };
