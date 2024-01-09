@@ -5,7 +5,7 @@ export const useScrollPosition = () => {
   
     useEffect(() => {
         const handleScroll = () => {
-            const isAtBottom = window.scrollY + window.innerHeight >= document.body.offsetHeight;
+            const isAtBottom = window.scrollY + window.innerHeight >= document.body.offsetHeight - 1000;
             setIsBottom(isAtBottom);
         }
   
