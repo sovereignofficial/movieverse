@@ -1,3 +1,6 @@
+# Movieverse
+Movieverse is an interactive entertainment platform that combines personalized movie recommendations based on user favorites, comprehensive search functionalities, profile customization, and activity tracking, offering a seamless experience for movie and TV show enthusiasts.
+
 ## Features 
 
 * Users need to be authenticated to use this app.
